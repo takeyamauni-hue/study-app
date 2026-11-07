@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高2スタディ・クエスト！</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1p:wght@400;700;900&display=swap');
+        body { font-family: 'M PLUS Rounded 1p', sans-serif; }
+    </style>
+</head>
+<body class="bg-indigo-950 text-slate-100 min-h-screen pb-12 selection:bg-pink-500 selection:text-white">
+
+    <div id="app" class="max-w-md mx-auto p-4 space-y-6">
+        <!-- ヘッダー -->
+        <header class="bg-gradient-to-r from-purple-600 to-pink-600 rounded-3xl p-5 shadow-lg border-b-4 border-pink-400 text-center relative overflow-hidden">
+            <div class="absolute -right-6 -bottom-6 text-white/10 text-8xl font-black">2nd</div>
+            <h1 class="text-2xl font-black tracking-wider flex items-center justify-center gap-2 drop-shadow">
+                <i class="fa-solid fa-gamepad text-yellow-300 animate-bounce"></i> スタディ・クエスト
+            </h1>
+            <p class="text-xs text-pink-100 mt-1 font-bold">高2ラストスパート！3月末コンプリート計画</p>
+            
+            <div id="countdown-badge" class="mt-3 inline-block bg-black/30 px-4 py-1 rounded-full text-xs font-bold text-yellow-300 border border-yellow-300/40">
+                3月末まで ああと -- 日
+            </div>
+        </header>
+
+        <!-- モード選択＆本日のタスクカード -->
+        <section class="bg-slate-900/90 border-2 border-purple-500/50 rounded-3xl p-5 shadow-xl relative">
+            <div class="flex justify-between items-center mb-3">
+                <span class="text-xs font-bold uppercase tracking-wider text-purple-300 bg-purple-950 px-3 py-1 rounded-full border border-purple-700">
+                    <i class="fa-solid fa-calendar-day mr-1">></i> 本日のモード
+                </span>
+                <select id="mode-selector" onchange="changeMode(this.value)" class="bg-slate-800 text-xs font-bold text-yellow-300 border border-yellow-300/40 rounded-xl px-3 py-1.5 focus:outline-none cursor-pointer">
+                    <option value="auto">🤖 自動判定モード</option>
+                    <option value="school_club">🔥 平日部活（3h）</option>
+                    <option value="school_noclub">⚡ 平日部活なし（5h）</option>
+                    <option value="holiday_club">🎾 休日部活あり（5h）</option>
+                    <option value="holiday_noclub">🌟 休日部活なし（7h）</option>
+                    <option value="holiday_play">🎮 休日遊び（5h）</option>
+                </select>
+            </div>
+
+            <div id="today-mode-banner" class="text-sm font-bold text-pink-300 mb-4 bg-pink-950/40 p-2.5 rounded-xl border border-pink-500/30 text-center">
+                判定中...
+            </div>
+
+            <h2 class="text-sm font-black text-slate-200 mb-3 flex items-center gap-2">
+                <i class="fa-solid fa-bullseye text-pink-400"></i> 今日のマストノルマ
+            </h2>
+
+            <div id="today-tasks-container" class="grid grid-cols-2 gap-2 text-center">
+                <!-- 動的生成 -->
+            </div>
+        </section>
+
+        <!-- 全体進捗ステータス -->
+        <section class="bg-slate-900/90 border-2 border-indigo-500/50 rounded-3xl p-5 shadow-xl">
+            <div class="flex justify-between items
