@@ -3,10 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>高2スタディ・クエスト！</title>
-    <!-- Tailwind CSS -->
+    <title>高2スタディ・クエスト！ - まるぷー版</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1p:wght@400;700;900&display=swap');
@@ -20,7 +18,7 @@
         <header class="bg-gradient-to-r from-purple-600 to-pink-600 rounded-3xl p-5 shadow-lg border-b-4 border-pink-400 text-center relative overflow-hidden">
             <div class="absolute -right-6 -bottom-6 text-white/10 text-8xl font-black">2nd</div>
             <h1 class="text-2xl font-black tracking-wider flex items-center justify-center gap-2 drop-shadow">
-                <i class="fa-solid fa-gamepad text-yellow-300 animate-bounce"></i> スタディ・クエスト
+                <i class="fa-solid fa-dog text-yellow-300 animate-bounce"></i> まるぷースタディ・クエスト
             </h1>
             <p class="text-xs text-pink-100 mt-1 font-bold">高2ラストスパート！3月末コンプリート計画</p>
             
@@ -29,7 +27,7 @@
             </div>
         </header>
 
-        <!-- モード選択＆本日のタスクカード -->
+        <!-- 本日のキャラ＆モードカード -->
         <section class="bg-slate-900/90 border-2 border-purple-500/50 rounded-3xl p-5 shadow-xl relative">
             <div class="flex justify-between items-center mb-3">
                 <span class="text-xs font-bold uppercase tracking-wider text-purple-300 bg-purple-950 px-3 py-1 rounded-full border border-purple-700">
@@ -45,36 +43,41 @@
                 </select>
             </div>
 
-            <div id="today-mode-banner" class="text-sm font-bold text-pink-300 mb-4 bg-pink-950/40 p-2.5 rounded-xl border border-pink-500/30 text-center">
-                判定中...
+            <div id="today-chara-status" class="bg-slate-800/90 p-4 rounded-2xl border border-pink-500/40 flex items-center gap-4 mb-4">
+                <div id="chara-icon" class="text-4xl">🐕</div>
+                <div>
+                    <div id="chara-title" class="text-xs font-bold text-yellow-300">今日のまるぷー</div>
+                    <div id="chara-message" class="text-sm font-black text-pink-200 mt-0.5">今日もコツコツ頑張ろう！</div>
+                </div>
             </div>
 
-            <h2 class="text-sm font-black text-slate-200 mb-3 flex items-center gap-2">
-                <i class="fa-solid fa-bullseye text-pink-400"></i> 今日のマストノルマ
-            </h2>
-
-            <div id="today-tasks-container" class="grid grid-cols-2 gap-2 text-center">
-                <!-- 動的生成 -->
+            <div id="today-mode-banner" class="text-xs font-bold text-pink-300 mb-4 bg-pink-950/40 p-2 rounded-xl border border-pink-500/30 text-center">
+                判定中...
             </div>
         </section>
 
-        <!-- 全体進捗ステータス -->
-        <section class="bg-slate-900/90 border-2 border-indigo-500/50 rounded-3xl p-5 shadow-xl">
-            <div class="flex justify-between items-center mb-2">
-                <span class="text-sm font-black text-indigo-300"><i class="fa-solid fa-trophy text-yellow-400 mr-1"></i> 3月末コンプリート進捗</span>
-                <span id="total-progress-pct" class="text-base font-black text-yellow-300">0%</span>
+        <!-- カレンダー＆達成度表示 -->
+        <section class="bg-slate-900/90 border-2 border-indigo-500/50 rounded-3xl p-5 shadow-xl space-y-3">
+            <div class="flex justify-between items-center">
+                <span class="text-sm font-black text-indigo-300"><i class="fa-solid fa-calendar-days text-yellow-400 mr-1"></i> 達成度カレンダー（直近7日）</span>
             </div>
-            <div class="w-full bg-slate-800 h-4 rounded-full overflow-hidden p-0.5 border border-indigo-500/30">
-                <div id="total-progress-bar" class="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+            <div id="calendar-container" class="grid grid-cols-7 gap-1 text-center">
+                <!-- 動的生成 -->
+            </div>
+            <div class="flex justify-between items-center pt-2 border-t border-slate-800 text-xs text-slate-400">
+                <span><span class="text-yellow-400">✨</span> 金:全クリア</span>
+                <span><span class="text-slate-300">🥈</span> 銀:半分</span>
+                <span><span class="text-blue-400">💤</span> 青:未達成</span>
             </div>
         </section>
 
         <!-- 科目タブ切り替え -->
         <div class="flex gap-2 overflow-x-auto pb-1">
-            <button onclick="switchTab('math')" id="tab-math" class="flex-1 py-2.5 px-3 rounded-2xl font-bold text-xs bg-purple-600 text-white shadow-lg transition whitespace-nowrap">数学</button>
+            <button onclick="switchTab('math1a')" id="tab-math1a" class="flex-1 py-2.5 px-3 rounded-2xl font-bold text-xs bg-purple-600 text-white shadow-lg transition whitespace-nowrap">数Ⅰ+A</button>
+            <button onclick="switchTab('math2bc')" id="tab-math2bc" class="flex-1 py-2.5 px-3 rounded-2xl font-bold text-xs bg-slate-800 text-slate-300 hover:bg-slate-700 transition whitespace-nowrap">数Ⅱ·B·C</button>
             <button onclick="switchTab('physics')" id="tab-physics" class="flex-1 py-2.5 px-3 rounded-2xl font-bold text-xs bg-slate-800 text-slate-300 hover:bg-slate-700 transition whitespace-nowrap">物理</button>
             <button onclick="switchTab('chemistry')" id="tab-chemistry" class="flex-1 py-2.5 px-3 rounded-2xl font-bold text-xs bg-slate-800 text-slate-300 hover:bg-slate-700 transition whitespace-nowrap">化学</button>
-            <button onclick="switchTab('words')" id="tab-words" class="flex-1 py-2.5 px-3 rounded-2xl font-bold text-xs bg-slate-800 text-slate-300 hover:bg-slate-700 transition whitespace-nowrap">単語・古文</button>
+            <button onclick="switchTab('words')" id="tab-words" class="flex-1 py-2.5 px-3 rounded-2xl font-bold text-xs bg-slate-800 text-slate-300 hover:bg-slate-700 transition whitespace-nowrap">単語</button>
         </div>
 
         <!-- メインコンテンツ領域 -->
@@ -83,92 +86,86 @@
         </main>
     </div>
 
-    <!-- JavaScript ロジック -->
     <script>
-        // 初期データ構造（数学・物理・化学・単語）
         const defaultData = {
             manualMode: 'auto',
-            words: { englishTotal: 0, classicalTotal: 0, lastUpdated: '' },
+            words: { englishTotal: 0, classicalTotal: 0 },
+            dailyLog: {}, // "YYYY-MM-DD": count
             subjects: {
-                math: {
-                    name: "数学（数ⅠA・ⅡBC）",
+                math1a: {
+                    name: "青チャート：数Ⅰ+A",
                     categories: [
-                        { id: "m1", title: "数ⅠA：数と式・集合と命題", count: 80 },
-                        { id: "m2", title: "数ⅠA：2次関数", count: 90 },
-                        { id: "m3", title: "数ⅠA：図形と計量・データ", count: 90 },
-                        { id: "m4", title: "数ⅠA：場合の数と確率・整数", count: 100 },
-                        { id: "m5", title: "数Ⅱ：式と証明・複素数と方程式", count: 90 },
-                        { id: "m6", title: "数Ⅱ：図形と方程式・三角関数", count: 100 },
-                        { id: "m7", title: "数Ⅱ：指数・対数関数", count: 70 },
-                        { id: "m8", title: "数Ⅱ：微分・積分の考え", count: 90 },
-                        { id: "m9", title: "数B：数列", count: 100 },
-                        { id: "m10", title: "数B・C：統計的な推測・ベクトル", count: 120 },
-                        { id: "m11", title: "数C：式と曲線・複素数平面", count: 110 },
-                        { id: "m12", title: "総合演習・入試実践", count: 160 }
+                        { id: "m1a_1", title: "数と式・集合と命題", count: 40 },
+                        { id: "m1a_2", title: "2次関数", count: 45 },
+                        { id: "m1a_3", title: "図形と計量・データ", count: 45 },
+                        { id: "m1a_4", title: "場合の数と確率・整数", count: 50 }
                     ],
-                    status: {} // key: "m1_0": 0(未), 1(△), 2(〇)
+                    status: {}, // key: "id_index": {st: 0~2, date: "12/5"}
+                },
+                math2bc: {
+                    name: "青チャート：数Ⅱ・B・C",
+                    categories: [
+                        { id: "m2bc_1", title: "式と証明・複素数と方程式", count: 35 },
+                        { id: "m2bc_2", title: "図形と方程式・三角関数", count: 45 },
+                        { id: "m2bc_3", title: "指数・対数・微分積分", count: 45 },
+                        { id: "m2bc_4", title: "数列・統計的な推測・ベクトル", count: 50 }
+                    ],
+                    status: {}
                 },
                 physics: {
-                    name: "物理（リードα）",
+                    name: "リードα：物理",
                     categories: [
-                        { id: "p1", title: "力学：運動と法則・力学的エネルギー", count: 130 },
-                        { id: "p2", title: "力学：運動量・円運動・万有引力", count: 90 },
-                        { id: "p3", title: "熱力学：気体の法則・熱力学第一法則", count: 80 },
-                        { id: "p4", title: "波動：波の性質・屈折・干渉・ドップラー", count: 100 },
-                        { id: "p5", title: "電磁気：電場・電流・磁場・電磁誘導", count: 120 },
-                        { id: "p6", title: "原子：光電効果・X線・原子核", count: 30 }
+                        { id: "p_1", title: "力学", count: 130 },
+                        { id: "p_2", title: "熱力学・波動", count: 180 },
+                        { id: "p_3", title: "電磁気・原子", count: 150 }
                     ],
                     status: {}
                 },
                 chemistry: {
-                    name: "化学（リードα）",
+                    name: "リードα：化学",
                     categories: [
-                        { id: "c1", title: "物質の構成と化学結合", count: 100 },
-                        { id: "c2", title: "物質の状態と溶液（気体・稀薄溶液）", count: 110 },
-                        { id: "c3", title: "化学反応と熱・化学平衡", count: 110 },
-                        { id: "c4", title: "酸と塩基・酸化還元反応", count: 110 },
-                        { id: "c5", title: "無機化学（非金属・金属元素）", count: 110 },
-                        { id: "c6", title: "有機化学（脂肪族・芳香族）", count: 110 },
-                        { id: "c7", title: "高分子化合物", count: 60 }
+                        { id: "c_1", title: "理論化学", count: 210 },
+                        { id: "c_2", title: "無機・有機化学", count: 220 }
                     ],
                     status: {}
                 }
             }
         };
 
-        let appData = JSON.parse(localStorage.getItem('study_quest_data_v2')) || defaultData;
-        let currentTab = 'math';
+        let appData = JSON.parse(localStorage.getItem('study_quest_data_v3')) || defaultData;
+        let currentTab = 'math1a';
 
         function saveData() {
-            localStorage.setItem('study_quest_data_v2', JSON.stringify(appData));
+            localStorage.setItem('study_quest_data_v3', JSON.stringify(appData));
             render();
         }
 
-        // 日付・モード判定ロジック (12/1 ～ 3/31)
+        function getTodayStr() {
+            const d = new Date();
+            return `${d.getMonth() + 1}/${d.getDate()}`;
+        }
+
+        function getTodayYMD() {
+            const d = new Date();
+            return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+        }
+
         function getTodayModeInfo() {
             if (appData.manualMode && appData.manualMode !== 'auto') {
                 const map = {
-                    school_club: { name: "🔥 平日部活モード", hours: "3時間", math: 7, phys: 4, chem: 4, eng: 50, clss: 30 },
-                    school_noclub: { name: "⚡ 平日部活なしモード", hours: "5時間", math: 11, phys: 6, chem: 6, eng: 70, clss: 40 },
-                    holiday_club: { name: "🎾 休日部活ありモード", hours: "5時間", math: 11, phys: 6, chem: 6, eng: 70, clss: 40 },
-                    holiday_noclub: { name: "🌟 休日部活なしモード", hours: "7時間", math: 15, phys: 8, chem: 9, eng: 100, clss: 50 },
-                    holiday_play: { name: "🎮 休日遊びモード", hours: "5時間", math: 11, phys: 6, chem: 6, eng: 70, clss: 40 }
+                    school_club: { name: "🔥 平日部活モード", hours: "3時間" },
+                    school_noclub: { name: "⚡ 平日部活なしモード", hours: "5時間" },
+                    holiday_club: { name: "🎾 休日部活ありモード", hours: "5時間" },
+                    holiday_noclub: { name: "🌟 休日部活なしモード", hours: "7時間" },
+                    holiday_play: { name: "🎮 休日遊びモード", hours: "5時間" }
                 };
                 return map[appData.manualMode];
             }
-
-            const now = new Date();
-            const dayOfWeek = now.getDay(); // 0:日, 1:月, 2:火, ... 6:土
-
-            if (dayOfWeek === 2) {
-                return { name: "⚡ 平日部活なしモード (火曜)", hours: "5時間", math: 11, phys: 6, chem: 6, eng: 70, clss: 40 };
-            } else if (dayOfWeek === 6) {
-                return { name: "🎾 休日部活ありモード (土曜)", hours: "5時間", math: 11, phys: 6, chem: 6, eng: 70, clss: 40 };
-            } else if (dayOfWeek === 0) {
-                return { name: "🌟 休日部活なしモード (日曜)", hours: "7時間", math: 15, phys: 8, chem: 9, eng: 100, clss: 50 };
-            } else {
-                return { name: "🔥 平日部活モード", hours: "3時間", math: 7, phys: 4, chem: 4, eng: 50, clss: 30 };
-            }
+            const dayOfWeek = new Date().getDay();
+            if (dayOfWeek === 2) return { name: "⚡ 平日部活なしモード (火曜)", hours: "5時間" };
+            if (dayOfWeek === 6) return { name: "🎾 休日部活ありモード (土曜)", hours: "5時間" };
+            if (dayOfWeek === 0) return { name: "🌟 休日部活なしモード (日曜)", hours: "7時間" };
+            return { name: "🔥 平日部活モード", hours: "3時間" };
         }
 
         function changeMode(val) {
@@ -178,7 +175,7 @@
 
         function switchTab(tab) {
             currentTab = tab;
-            ['math', 'physics', 'chemistry', 'words'].forEach(t => {
+            ['math1a', 'math2bc', 'physics', 'chemistry', 'words'].forEach(t => {
                 const btn = document.getElementById(`tab-${t}`);
                 if (t === tab) {
                     btn.className = "flex-1 py-2.5 px-3 rounded-2xl font-bold text-xs bg-purple-600 text-white shadow-lg transition whitespace-nowrap";
@@ -191,9 +188,25 @@
 
         function cycleStatus(subjectKey, catId, idx) {
             const key = `${catId}_${idx}`;
-            let current = appData.subjects[subjectKey].status[key] || 0;
-            current = (current + 1) % 3;
-            appData.subjects[subjectKey].status[key] = current;
+            let currentObj = appData.subjects[subjectKey].status[key] || { st: 0, date: "" };
+            let nextSt = (currentObj.st + 1) % 3; // 0:未 -> 1:△ -> 2:〇 -> 0
+            let todayStr = getTodayStr();
+            
+            appData.subjects[subjectKey].status[key] = {
+                st: nextSt,
+                date: nextSt > 0 ? todayStr : ""
+            };
+
+            // デイリーログのカウント更新
+            let todayYMD = getTodayYMD();
+            let completedCount = 0;
+            Object.keys(appData.subjects).forEach(sK => {
+                Object.values(appData.subjects[sK].status).forEach(item => {
+                    if (item.st === 2 && item.date === todayStr) completedCount++;
+                });
+            });
+            appData.dailyLog[todayYMD] = completedCount;
+
             saveData();
         }
 
@@ -204,52 +217,62 @@
         }
 
         function render() {
+            // カウントダウン
             const now = new Date();
             const target = new Date(now.getFullYear() + (now.getMonth() > 2 ? 1 : 0), 2, 31);
-            const diffTime = target - now;
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            const diffDays = Math.ceil((target - now) / (1000 * 60 * 60 * 24));
             document.getElementById('countdown-badge').innerText = `3月末まで あと ${Math.max(0, diffDays)} 日`;
 
             const modeInfo = getTodayModeInfo();
             document.getElementById('mode-selector').value = appData.manualMode;
             document.getElementById('today-mode-banner').innerHTML = `<i class="fa-solid fa-bolt text-yellow-300 mr-1"></i> ${modeInfo.name} （目安：${modeInfo.hours}）`;
 
-            document.getElementById('today-tasks-container').innerHTML = `
-                <div class="bg-slate-800/80 p-3 rounded-2xl border border-purple-500/30">
-                    <div class="text-xs text-purple-300 font-bold">数学ノルマ</div>
-                    <div class="text-lg font-black text-white mt-1">${modeInfo.math} <span class="text-xs font-normal">問</span></div>
-                </div>
-                <div class="bg-slate-800/80 p-3 rounded-2xl border border-blue-500/30">
-                    <div class="text-xs text-blue-300 font-bold">物理ノルマ</div>
-                    <div class="text-lg font-black text-white mt-1">${modeInfo.phys} <span class="text-xs font-normal">問</span></div>
-                </div>
-                <div class="bg-slate-800/80 p-3 rounded-2xl border border-emerald-500/30">
-                    <div class="text-xs text-emerald-300 font-bold">化学ノルマ</div>
-                    <div class="text-lg font-black text-white mt-1">${modeInfo.chem} <span class="text-xs font-normal">問</span></div>
-                </div>
-                <div class="bg-slate-800/80 p-3 rounded-2xl border border-pink-500/30">
-                    <div class="text-xs text-pink-300 font-bold">単語＆古文</div>
-                    <div class="text-sm font-black text-white mt-1">英${modeInfo.eng}/古${modeInfo.clss}</div>
-                </div>
-            `;
+            // 今日の進捗からまるぷーキャラクター判定
+            let todayStr = getTodayStr();
+            let todayYMD = getTodayYMD();
+            let todayDone = appData.dailyLog[todayYMD] || 0;
+            
+            let charaIcon = "💤🐕";
+            let charaTitle = "今日のまるぷー（青・未達成）";
+            let charaMsg = "まだ問題が進んでないよ！エンジンかけよう！";
+            
+            if (todayDone >= 15) {
+                charaIcon = "✨🐕";
+                charaTitle = "今日のまるぷー（金色・全クリア！）";
+                charaMsg = "すばらしい！今日もうまくいったね！この調子！";
+            } else if (todayDone >= 5) {
+                charaIcon = "🥈🐕";
+                charaTitle = "今日のまるぷー（銀色・半分達成）";
+                charaMsg = "いいペース！あと少しで金色のまるぷーになれるよ！";
+            }
+            document.getElementById('chara-icon').innerText = charaIcon;
+            document.getElementById('chara-title').innerText = charaTitle;
+            document.getElementById('chara-message').innerText = charaMsg;
 
-            let totalQuestions = 0;
-            let completedQuestions = 0;
-            Object.keys(appData.subjects).forEach(sKey => {
-                const sub = appData.subjects[sKey];
-                sub.categories.forEach(cat => {
-                    totalQuestions += cat.count;
-                    for (let i = 0; i < cat.count; i++) {
-                        if ((sub.status[`${cat.id}_${i}`] || 0) === 2) {
-                            completedQuestions++;
-                        }
-                    }
-                });
-            });
-            const totalPct = totalQuestions > 0 ? Math.round((completedQuestions / totalQuestions) * 100) : 0;
-            document.getElementById('total-progress-pct').innerText = totalPct + '%';
-            document.getElementById('total-progress-bar').style.width = totalPct + '%';
+            // カレンダー描画（直近7日）
+            let calHtml = "";
+            for (let i = 6; i >= 0; i--) {
+                let d = new Date();
+                d.setDate(d.getDate() - i);
+                let ymd = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+                let count = appData.dailyLog[ymd] || 0;
+                
+                let icon = "💤";
+                let borderColor = "border-slate-700 bg-slate-800/50 text-blue-400";
+                if (count >= 15) { icon = "✨"; borderColor = "border-yellow-400 bg-yellow-500/20 text-yellow-300 font-bold"; }
+                else if (count >= 5) { icon = "🥈"; borderColor = "border-slate-300 bg-slate-300/20 text-slate-200 font-bold"; }
 
+                calHtml += `
+                    <div class="p-1.5 rounded-xl border ${borderColor} text-center">
+                        <div class="text-[10px] text-slate-400">${d.getMonth()+1}/${d.getDate()}</div>
+                        <div class="text-lg my-0.5">${icon}</div>
+                        <div class="text-[9px] text-slate-300">${count}問</div>
+                    </div>
+                `;
+            }
+            document.getElementById('calendar-container').innerHTML = calHtml;
+
+            // メインコンテンツ
             const main = document.getElementById('main-content');
             main.innerHTML = '';
 
@@ -257,40 +280,30 @@
                 main.innerHTML = `
                     <div class="bg-slate-900/90 border-2 border-pink-500/50 rounded-3xl p-5 shadow-xl space-y-4">
                         <h3 class="text-base font-black text-pink-300 flex items-center gap-2"><i class="fa-solid fa-book-open"></i> 英単語・古典単語カウンター</h3>
-                        
                         <div class="bg-slate-800 p-4 rounded-2xl border border-slate-700 space-y-2">
-                            <div class="flex justify-between items-center">
-                                <span class="font-bold text-sm">英単語 累計マスター</span>
-                                <span class="text-xl font-black text-yellow-300">${appData.words.englishTotal} 語</span>
-                            </div>
+                            <div class="flex justify-between items-center"><span class="font-bold text-sm">英単語 累計</span><span class="text-xl font-black text-yellow-300">${appData.words.englishTotal} 語</span></div>
                             <div class="flex gap-2 pt-1">
-                                <button onclick="addWords('eng', 10)" class="flex-1 bg-pink-600 hover:bg-pink-500 py-2 rounded-xl font-bold text-xs">+10語完了</button>
-                                <button onclick="addWords('eng', 30)" class="flex-1 bg-purple-600 hover:bg-purple-500 py-2 rounded-xl font-bold text-xs">+30語完了</button>
-                                <button onclick="addWords('eng', 50)" class="flex-1 bg-indigo-600 hover:bg-indigo-500 py-2 rounded-xl font-bold text-xs">+50語完了</button>
+                                <button onclick="addWords('eng', 10)" class="flex-1 bg-pink-600 hover:bg-pink-500 py-2 rounded-xl font-bold text-xs">+10語</button>
+                                <button onclick="addWords('eng', 30)" class="flex-1 bg-purple-600 hover:bg-purple-500 py-2 rounded-xl font-bold text-xs">+30語</button>
                             </div>
                         </div>
-
                         <div class="bg-slate-800 p-4 rounded-2xl border border-slate-700 space-y-2">
-                            <div class="flex justify-between items-center">
-                                <span class="font-bold text-sm">古典単語 累計マスター</span>
-                                <span class="text-xl font-black text-yellow-300">${appData.words.classicalTotal} 語</span>
-                            </div>
+                            <div class="flex justify-between items-center"><span class="font-bold text-sm">古典単語 累計</span><span class="text-xl font-black text-yellow-300">${appData.words.classicalTotal} 語</span></div>
                             <div class="flex gap-2 pt-1">
-                                <button onclick="addWords('clss', 10)" class="flex-1 bg-pink-600 hover:bg-pink-500 py-2 rounded-xl font-bold text-xs">+10語完了</button>
-                                <button onclick="addWords('clss', 20)" class="flex-1 bg-purple-600 hover:bg-purple-500 py-2 rounded-xl font-bold text-xs">+20語完了</button>
-                                <button onclick="addWords('clss', 30)" class="flex-1 bg-indigo-600 hover:bg-indigo-500 py-2 rounded-xl font-bold text-xs">+30語完了</button>
+                                <button onclick="addWords('clss', 10)" class="flex-1 bg-pink-600 hover:bg-pink-500 py-2 rounded-xl font-bold text-xs">+10語</button>
+                                <button onclick="addWords('clss', 20)" class="flex-1 bg-purple-600 hover:bg-purple-500 py-2 rounded-xl font-bold text-xs">+20語</button>
                             </div>
                         </div>
                     </div>
                 `;
             } else {
                 const subData = appData.subjects[currentTab];
-                let html = `<div class="space-y-4">`;
+                let html = `<div class="space-y-4"><h3 class="text-xs font-bold text-purple-300 px-1">${subData.name} の問題一覧（タップで ○ ➔ △ ➔ ×）</h3>`;
                 
                 subData.categories.forEach(cat => {
                     let catCompleted = 0;
                     for (let i = 0; i < cat.count; i++) {
-                        if ((subData.status[`${cat.id}_${i}`] || 0) === 2) catCompleted++;
+                        if ((subData.status[`${cat.id}_${i}`] || {st:0}).st === 2) catCompleted++;
                     }
                     const catPct = Math.round((catCompleted / cat.count) * 100);
 
@@ -303,17 +316,22 @@
                             <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
                                 <div class="bg-indigo-500 h-full rounded-full" style="width: ${catPct}%"></div>
                             </div>
-                            <div class="flex flex-wrap gap-1.5 pt-1">
+                            <div class="grid grid-cols-6 gap-1.5 pt-1">
                     `;
 
                     for (let i = 0; i < cat.count; i++) {
-                        const st = subData.status[`${cat.id}_${i}`] || 0;
+                        const item = subData.status[`${cat.id}_${i}`] || { st: 0, date: "" };
+                        let st = item.st;
                         let bg = "bg-slate-800 text-slate-400 border-slate-700";
-                        let label = i + 1;
-                        if (st === 1) bg = "bg-amber-500/20 text-amber-300 border-amber-500/50";
-                        if (st === 2) bg = "bg-emerald-500 text-white border-emerald-400 font-bold shadow-sm shadow-emerald-500/50";
+                        let mark = i + 1;
+                        if (st === 1) { bg = "bg-amber-500/20 text-amber-300 border-amber-500/50"; mark = (i+1) + "△"; }
+                        if (st === 2) { bg = "bg-emerald-500 text-white border-emerald-400 font-bold shadow-sm"; mark = (i+1) + "〇"; }
 
-                        html += `<button onclick="cycleStatus('${currentTab}', '${cat.id}', ${i})" class="w-9 h-9 rounded-xl border text-xs flex items-center justify-center transition active:scale-95 ${bg}">${label}</button>`;
+                        html += `<button onclick="cycleStatus('${currentTab}', '${cat.id}', ${i})" class="py-1.5 px-1 rounded-xl border text-[11px] flex flex-col items-center justify-center transition active:scale-95 ${bg}">
+                            <span class="font-bold">${i+1}</span>
+                            <span class="text-[9px] opacity-80">${st === 2 ? '〇' : (st === 1 ? '△' : '-')}</span>
+                            ${item.date ? `<span class="text-[8px] text-yellow-300">${item.date}</span>` : ''}
+                        </button>`;
                     }
 
                     html += `</div></div>`;
