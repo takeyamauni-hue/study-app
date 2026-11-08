@@ -39,7 +39,7 @@
                 📅 今日のタスク
             </button>
             <button onclick="switchTab('math')" id="tab-btn-math" class="flex-1 py-2.5 px-3 rounded-xl font-bold text-sm transition-all text-slate-600 hover:bg-slate-100 whitespace-nowrap">
-                📐 数学チャート
+                📐 数学チャート(全795題)
             </button>
             <button onclick="switchTab('settings')" id="tab-btn-settings" class="flex-1 py-2.5 px-3 rounded-xl font-bold text-sm transition-all text-slate-600 hover:bg-slate-100 whitespace-nowrap">
                 📋 設定一覧
@@ -54,7 +54,6 @@
 
         <!-- 1. 今日のタスクタブ -->
         <div id="tab-task" class="space-y-6">
-            <!-- モード選択 ＆ 映像授業切替カード -->
             <div class="bg-white rounded-3xl p-6 shadow-md border-2 border-indigo-100">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4">
                     <div>
@@ -63,7 +62,6 @@
                         </h2>
                         <p class="text-xs text-slate-500">今日のスケジュールに合わせて選ぼう！</p>
                     </div>
-                    <!-- 映像授業トグル -->
                     <div class="flex items-center bg-indigo-50 p-1.5 rounded-2xl border border-indigo-200">
                         <span class="text-xs font-bold text-indigo-800 px-2">🎬 映像授業:</span>
                         <button onclick="toggleVideo(true)" id="video-btn-yes" class="px-3 py-1 text-xs font-bold rounded-xl transition-all bg-indigo-600 text-white shadow">あり (1.5h)</button>
@@ -71,7 +69,6 @@
                     </div>
                 </div>
 
-                <!-- モードボタン群 -->
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-2.5">
                     <button onclick="setMode('weekday_club')" id="btn-weekday_club" class="p-3 rounded-2xl border-2 text-left transition-all bg-indigo-50 border-indigo-300">
                         <div class="text-xs font-bold text-indigo-600">平日 (3h)</div>
@@ -92,11 +89,10 @@
                 </div>
             </div>
 
-            <!-- 本日のタスクリスト -->
             <div class="bg-white rounded-3xl p-6 shadow-md border-2 border-indigo-100">
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="text-lg font-extrabold text-indigo-900 flex items-center gap-2">
-                        ✨ 本日のノルマと達成度
+                        ✨ 本日のノルマ
                     </h2>
                     <span id="today-mode-label" class="bg-indigo-100 text-indigo-800 text-xs font-bold px-3 py-1 rounded-full">
                         平日部活あり (映像授業あり)
@@ -109,11 +105,18 @@
             </div>
         </div>
 
-        <!-- 2. 数学チャートタブ -->
+        <!-- 2. 数学チャートタブ (個別の例題番号入力) -->
         <div id="tab-math" class="hidden space-y-6">
             <div class="bg-white rounded-3xl p-6 shadow-md border-2 border-indigo-100">
-                <h2 class="text-lg font-extrabold text-indigo-900 mb-2">📐 青チャート（数学ⅠA・ⅡBC）進捗</h2>
-                <p class="text-xs text-slate-500 mb-6">全795題の1周コンプリートに向けて、単元ごとにステータスを更新しよう！</p>
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-2 mb-4">
+                    <div>
+                        <h2 class="text-lg font-extrabold text-indigo-900">📐 青チャート（全795題・例題チェック）</h2>
+                        <p class="text-xs text-slate-500">各例題番号をタップ：未 ➔ 〇(緑) ➔ △(黄) ➔ ×(赤)</p>
+                    </div>
+                    <div class="text-xs font-bold bg-indigo-50 text-indigo-800 px-3 py-1.5 rounded-xl border border-indigo-200">
+                        凡例: <span class="text-emerald-600 font-black">〇 完了</span> / <span class="text-amber-500 font-black">△ 復習</span> / <span class="text-rose-600 font-black">× 苦手</span>
+                    </div>
+                </div>
                 
                 <div id="math-units-container" class="space-y-6">
                     <!-- 動的生成 -->
@@ -194,47 +197,46 @@
     </main>
 
     <script>
-        // --- データ定義 ---
+        // --- 目次＆全問題数データ ---
         const mathData = [
             // 数学ⅠA (350題)
-            { id: "m1", name: "数と式", count: 43, category: "1A" },
-            { id: "m2", name: "集合と命題", count: 20, category: "1A" },
-            { id: "m3", name: "二次関数", count: 69, category: "1A" },
-            { id: "m4", name: "図形と計量", count: 42, category: "1A" },
-            { id: "m5", name: "データの分析", count: 20, category: "1A" },
-            { id: "m6", name: "場合の数", count: 34, category: "1A" },
-            { id: "m7", name: "確率", count: 35, category: "1A" },
-            { id: "m8", name: "図形の性質", count: 40, category: "1A" },
-            { id: "m9", name: "数学と人間の活動", count: 47, category: "1A" },
+            { id: "m1", name: "数と式", count: 43, start: 1, category: "1A" },
+            { id: "m2", name: "集合と命題", count: 20, start: 44, category: "1A" },
+            { id: "m3", name: "二次関数", count: 69, start: 64, category: "1A" },
+            { id: "m4", name: "図形と計量", count: 42, start: 133, category: "1A" },
+            { id: "m5", name: "データの分析", count: 20, start: 175, category: "1A" },
+            { id: "m6", name: "場合の数", count: 34, start: 1, category: "1A_A" },
+            { id: "m7", name: "確率", count: 35, start: 35, category: "1A_A" },
+            { id: "m8", name: "図形の性質", count: 40, start: 70, category: "1A_A" },
+            { id: "m9", name: "数学と人間の活動", count: 47, start: 110, category: "1A_A" },
             // 数学ⅡBC (445題)
-            { id: "m10", name: "多項式", count: 34, category: "2BC" },
-            { id: "m11", name: "複素数と方程式", count: 36, category: "2BC" },
-            { id: "m12", name: "図形と方程式", count: 61, category: "2BC" },
-            { id: "m13", name: "三角関数", count: 37, category: "2BC" },
-            { id: "m14", name: "指数・対数関数", count: 26, category: "2BC" },
-            { id: "m15", name: "微分法", count: 40, category: "2BC" },
-            { id: "m16", name: "積分法", count: 28, category: "2BC" },
-            { id: "m17", name: "数列", count: 61, category: "2BC" },
-            { id: "m18", name: "統計的な確率", count: 33, category: "2BC" },
-            { id: "m19", name: "ベクトル (平面)", count: 43, category: "2BC" },
-            { id: "m20", name: "空間ベクトル", count: 46, category: "2BC" }
+            { id: "m10", name: "多項式", count: 34, start: 1, category: "2B" },
+            { id: "m11", name: "複素数と方程式", count: 36, start: 35, category: "2B" },
+            { id: "m12", name: "図形と方程式", count: 61, start: 71, category: "2B" },
+            { id: "m13", name: "三角関数", count: 37, start: 132, category: "2B" },
+            { id: "m14", name: "指数・対数関数", count: 26, start: 169, category: "2B" },
+            { id: "m15", name: "微分法", count: 40, start: 195, category: "2B" },
+            { id: "m16", name: "積分法", count: 28, start: 235, category: "2B" },
+            { id: "m17", name: "数列", count: 61, start: 1, category: "2B_B" },
+            { id: "m18", name: "統計的な推測", count: 33, start: 62, category: "2B_B" },
+            { id: "m19", name: "ベクトル (平面)", count: 43, start: 1, category: "2B_C" },
+            { id: "m20", name: "空間ベクトル", count: 46, start: 44, category: "2B_C" }
         ];
 
-        // 標準目標設定データ (デフォルト)
         let defaultTargets = {
             weekday_club: { name: "平日部活あり (3h)", time: "自習 1.5h", mathVideo: 5, mathNoVideo: 8, phyVideo: 3, phyNoVideo: 5, chemVideo: 3, chemNoVideo: 5, vocab: "英 50語 / 古 20語" },
             weekday_noclub: { name: "平日部活なし (5h)", time: "自習 3.5h", mathVideo: 8, mathNoVideo: 12, phyVideo: 5, phyNoVideo: 7, chemVideo: 5, chemNoVideo: 7, vocab: "英 100語 / 古 30語" },
             holiday_club: { name: "休日部活あり (5h)", time: "自習 3.5h", mathVideo: 8, mathNoVideo: 12, phyVideo: 5, phyNoVideo: 7, chemVideo: 5, chemNoVideo: 7, vocab: "英 100語 / 古 30語" },
-            holiday_noclub: { name: "休日部活なし (7h)", time: "自習 5.5h", mathVideo: 12, mathNoVideo: 16, phyVideo: 7, phyNoVideo: 10, chemVideo: 7, phyNoVideo: 10, chemNoVideo: 10, vocab: "英 100語 / 古 40語" }
+            holiday_noclub: { name: "休日部活なし (7h)", time: "自習 5.5h", mathVideo: 12, mathNoVideo: 16, phyVideo: 7, phyNoVideo: 10, chemVideo: 7, chemNoVideo: 10, vocab: "英 100語 / 古 40語" }
         };
 
         let currentMode = "weekday_club";
         let hasVideo = true;
-        let userProgress = JSON.parse(localStorage.getItem('study_progress')) || {};
+        // 例題ごとのステータス保存 { "m1_1": "ok", "m1_2": "delta", ... }
+        let itemProgress = JSON.parse(localStorage.getItem('study_item_progress')) || {};
         let customTargets = JSON.parse(localStorage.getItem('custom_targets')) || JSON.parse(JSON.stringify(defaultTargets));
         let chartInstance = null;
 
-        // --- 初期化 ---
         window.onload = function() {
             renderTasks();
             renderMathUnits();
@@ -243,7 +245,6 @@
             updateProgressChart();
         };
 
-        // --- タブ切り替え ---
         function switchTab(tabId) {
             ['task', 'math', 'settings', 'custom', 'progress'].forEach(t => {
                 document.getElementById(`tab-${t}`).classList.add('hidden');
@@ -255,16 +256,11 @@
             if(tabId === 'progress') updateProgressChart();
         }
 
-        // --- モード＆映像授業切替 ---
         function setMode(mode) {
             currentMode = mode;
             ['weekday_club', 'weekday_noclub', 'holiday_club', 'holiday_noclub'].forEach(m => {
                 const btn = document.getElementById(`btn-${m}`);
-                if(m === mode) {
-                    btn.className = "p-3 rounded-2xl border-2 text-left transition-all bg-indigo-50 border-indigo-300 shadow-sm";
-                } else {
-                    btn.className = "p-3 rounded-2xl border-2 text-left transition-all bg-white border-slate-200";
-                }
+                btn.className = (m === mode) ? "p-3 rounded-2xl border-2 text-left transition-all bg-indigo-50 border-indigo-300 shadow-sm" : "p-3 rounded-2xl border-2 text-left transition-all bg-white border-slate-200";
             });
             renderTasks();
         }
@@ -276,7 +272,6 @@
             renderTasks();
         }
 
-        // --- タスク描画 ---
         function renderTasks() {
             const target = customTargets[currentMode];
             const mathCount = hasVideo ? target.mathVideo : target.mathNoVideo;
@@ -295,7 +290,6 @@
                             <div class="text-xs text-indigo-600 font-bold">目標: ${mathCount} 問</div>
                         </div>
                     </div>
-                    <span class="text-xs bg-indigo-100 text-indigo-700 font-extrabold px-3 py-1.5 rounded-xl">自習メイン</span>
                 </div>
                 <div class="flex items-center justify-between p-4 bg-emerald-50/50 rounded-2xl border border-emerald-100">
                     <div class="flex items-center gap-3">
@@ -327,51 +321,67 @@
             `;
         }
 
-        // --- 数学チャート単元一覧描画 ---
+        // --- 全例題ボタン（番号ごと）の生成 ---
         function renderMathUnits() {
             const container = document.getElementById('math-units-container');
             container.innerHTML = "";
 
-            ['1A', '2BC'].forEach(cat => {
-                const units = mathData.filter(u => u.category === cat);
-                let html = `<div class="mb-4"><h3 class="font-extrabold text-indigo-800 text-sm mb-3">■ 数学 ${cat}</h3><div class="space-y-3">`;
-                
-                units.forEach(u => {
-                    const status = userProgress[u.id] || 'none';
-                    html += `
-                        <div class="flex items-center justify-between p-3.5 bg-slate-50 rounded-2xl border border-slate-200">
-                            <div>
-                                <div class="font-extrabold text-slate-800 text-sm">${u.name}</div>
-                                <div class="text-xs text-slate-500 font-bold">全 ${u.count} 題</div>
-                            </div>
-                            <div class="flex gap-1.5">
-                                <button onclick="setStatus('${u.id}', 'ok')" class="px-3 py-1.5 rounded-xl font-bold text-xs transition-all ${status === 'ok' ? 'bg-emerald-600 text-white shadow' : 'bg-white text-slate-600 border border-slate-200'}">〇 完了</button>
-                                <button onclick="setStatus('${u.id}', 'delta')" class="px-3 py-1.5 rounded-xl font-bold text-xs transition-all ${status === 'delta' ? 'bg-amber-500 text-white shadow' : 'bg-white text-slate-600 border border-slate-200'}">△ 復習</button>
-                                <button onclick="setStatus('${u.id}', 'cross')" class="px-3 py-1.5 rounded-xl font-bold text-xs transition-all ${status === 'cross' ? 'bg-rose-600 text-white shadow' : 'bg-white text-slate-600 border border-slate-200'}">× 苦手</button>
-                            </div>
-                        </div>
+            mathData.forEach(u => {
+                let buttonsHtml = "";
+                for(let i = 0; i < u.count; i++) {
+                    const probNum = u.start + i;
+                    const key = `${u.id}_${probNum}`;
+                    const status = itemProgress[key] || 'none';
+
+                    let btnStyle = "bg-slate-100 text-slate-600 hover:bg-slate-200 border-slate-200";
+                    if(status === 'ok') btnStyle = "bg-emerald-500 text-white border-emerald-600 font-black shadow-sm";
+                    if(status === 'delta') btnStyle = "bg-amber-400 text-slate-900 border-amber-500 font-black shadow-sm";
+                    if(status === 'cross') btnStyle = "bg-rose-500 text-white border-rose-600 font-black shadow-sm";
+
+                    buttonsHtml += `
+                        <button onclick="cycleItemStatus('${key}')" class="h-10 rounded-xl border text-xs flex flex-col items-center justify-center transition-all ${btnStyle}">
+                            <span>${probNum}</span>
+                        </button>
                     `;
-                });
-                html += `</div></div>`;
-                container.innerHTML += html;
+                }
+
+                container.innerHTML += `
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3">
+                        <div class="flex justify-between items-center">
+                            <div class="font-extrabold text-slate-800 text-sm">
+                                <span class="bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded-md text-xs mr-2 font-bold">${u.category}</span>
+                                ${u.name}
+                            </div>
+                            <div class="text-xs text-slate-500 font-bold">全 ${u.count} 題 (例題${u.start}〜)</div>
+                        </div>
+                        <div class="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 gap-1.5">
+                            ${buttonsHtml}
+                        </div>
+                    </div>
+                `;
             });
         }
 
-        function setStatus(id, status) {
-            if(userProgress[id] === status) {
-                delete userProgress[id];
+        // --- ステータス切り替えロジック (未 ➔ ok ➔ delta ➔ cross ➔ 未) ---
+        function cycleItemStatus(key) {
+            const current = itemProgress[key] || 'none';
+            let next = 'ok';
+            if(current === 'ok') next = 'delta';
+            else if(current === 'delta') next = 'cross';
+            else if(current === 'cross') next = 'none';
+
+            if(next === 'none') {
+                delete itemProgress[key];
             } else {
-                userProgress[id] = status;
-                if(status === 'ok') {
-                    confetti({ particleCount: 40, spread: 60, origin: { y: 0.8 } });
-                }
+                itemProgress[key] = next;
+                if(next === 'ok') confetti({ particleCount: 15, spread: 40, origin: { y: 0.8 } });
             }
-            localStorage.setItem('study_progress', JSON.stringify(userProgress));
+
+            localStorage.setItem('study_item_progress', JSON.stringify(itemProgress));
             renderMathUnits();
             updateProgressChart();
         }
 
-        // --- 設定一覧テーブル描画 ---
         function renderSettingsTable() {
             const tbody = document.getElementById('settings-table-body');
             tbody.innerHTML = "";
@@ -390,7 +400,6 @@
             });
         }
 
-        // --- 目標カスタマイズフォーム描画 ---
         function renderCustomForm() {
             const container = document.getElementById('custom-form-container');
             container.innerHTML = "";
@@ -435,22 +444,14 @@
             alert("目標設定を保存しました！🎉");
         }
 
-        // --- 全体進捗チャート更新 ---
         function updateProgressChart() {
             let okCount = 0, deltaCount = 0, crossCount = 0;
-            let completedProblems = 0;
             const totalProblems = 795;
 
-            mathData.forEach(u => {
-                const s = userProgress[u.id];
-                if(s === 'ok') {
-                    okCount += u.count;
-                    completedProblems += u.count;
-                } else if(s === 'delta') {
-                    deltaCount += u.count;
-                } else if(s === 'cross') {
-                    crossCount += u.count;
-                }
+            Object.values(itemProgress).forEach(status => {
+                if(status === 'ok') okCount++;
+                if(status === 'delta') deltaCount++;
+                if(status === 'cross') crossCount++;
             });
 
             const noneCount = totalProblems - (okCount + deltaCount + crossCount);
