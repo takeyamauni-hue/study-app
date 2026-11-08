@@ -110,7 +110,7 @@
                     <div class="bg-indigo-50/50 p-3 rounded-xl border border-indigo-100 flex items-center justify-between">
                         <div>
                             <div class="font-bold text-indigo-950 text-xs">📐 数学チャート (〇/△/×)</div>
-                            <div class="text-[10px] text-indigo-600 font-bold">目標: <span id="target-math-num">5</span> 問</div>
+                            <div class="text-[10px] text-indigo-600 font-bold">目標: <span id="target-math-num">7</span> 問</div>
                         </div>
                         <div class="text-right">
                             <span id="actual-math-num" class="text-lg font-black text-indigo-900">0</span> <span class="text-[10px] font-bold text-slate-500">問完了</span>
@@ -120,7 +120,7 @@
                     <div class="bg-emerald-50/50 p-3 rounded-xl border border-emerald-100 flex items-center justify-between">
                         <div>
                             <div class="font-bold text-emerald-950 text-xs">⚛️ 物理</div>
-                            <div class="text-[10px] text-emerald-600 font-bold">目標: <span id="target-phy-num">3</span> 問</div>
+                            <div class="text-[10px] text-emerald-600 font-bold">目標: <span id="target-phy-num">5</span> 問</div>
                         </div>
                         <div class="flex items-center gap-1.5">
                             <button onclick="adjustScience('phy', -1)" class="w-7 h-7 rounded-lg bg-white border border-emerald-200 font-bold text-emerald-700 shadow-sm text-xs">-</button>
@@ -132,7 +132,7 @@
                     <div class="bg-amber-50/50 p-3 rounded-xl border border-amber-100 flex items-center justify-between">
                         <div>
                             <div class="font-bold text-amber-950 text-xs">🧪 化学</div>
-                            <div class="text-[10px] text-amber-600 font-bold">目標: <span id="target-chem-num">3</span> 問</div>
+                            <div class="text-[10px] text-amber-600 font-bold">目標: <span id="target-chem-num">5</span> 問</div>
                         </div>
                         <div class="flex items-center gap-1.5">
                             <button onclick="adjustScience('chem', -1)" class="w-7 h-7 rounded-lg bg-white border border-amber-200 font-bold text-amber-700 shadow-sm text-xs">-</button>
@@ -140,15 +140,28 @@
                             <button onclick="adjustScience('chem', 1)" class="w-7 h-7 rounded-lg bg-amber-600 text-white font-bold shadow-sm text-xs">+</button>
                         </div>
                     </div>
-                    <!-- 暗記科目 -->
+                    <!-- 英単語 -->
                     <div class="bg-purple-50/50 p-3 rounded-xl border border-purple-100 flex items-center justify-between">
                         <div>
-                            <div class="font-bold text-purple-950 text-xs">📖 暗記単語</div>
-                            <div class="text-[10px] text-purple-600 font-bold">英/古文ルーティン</div>
+                            <div class="font-bold text-purple-950 text-xs">🔤 英単語</div>
+                            <div class="text-[10px] text-purple-600 font-bold">目標: <span id="target-eng-num">20</span> 語</div>
                         </div>
                         <div class="flex items-center gap-1.5">
-                            <button onclick="adjustVocab(10)" class="px-2.5 py-1 rounded-lg bg-purple-600 text-white font-bold text-[11px] shadow-sm">+10語</button>
-                            <span id="actual-vocab-num" class="text-base font-black text-purple-900">0</span> <span class="text-[10px] font-bold text-slate-500">語</span>
+                            <button onclick="adjustVocab('eng', -5)" class="w-7 h-7 rounded-lg bg-white border border-purple-200 font-bold text-purple-700 shadow-sm text-xs">-5</button>
+                            <span id="actual-eng-num" class="text-base font-black text-purple-900 w-8 text-center">0</span>
+                            <button onclick="adjustVocab('eng', 5)" class="px-2 py-1 rounded-lg bg-purple-600 text-white font-bold text-[11px] shadow-sm">+5語</button>
+                        </div>
+                    </div>
+                    <!-- 古文単語 -->
+                    <div class="bg-pink-50/50 p-3 rounded-xl border border-pink-100 flex items-center justify-between col-span-1 md:col-span-2">
+                        <div>
+                            <div class="font-bold text-pink-950 text-xs">📜 古文単語</div>
+                            <div class="text-[10px] text-pink-600 font-bold">目標: <span id="target-kobun-num">20</span> 語</div>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <button onclick="adjustVocab('kobun', -5)" class="w-7 h-7 rounded-lg bg-white border border-pink-200 font-bold text-pink-700 shadow-sm text-xs">-5</button>
+                            <span id="actual-kobun-num" class="text-base font-black text-pink-900 w-8 text-center">0</span>
+                            <button onclick="adjustVocab('kobun', 5)" class="px-2 py-1 rounded-lg bg-pink-600 text-white font-bold text-[11px] shadow-sm">+5語</button>
                         </div>
                     </div>
                 </div>
@@ -159,7 +172,7 @@
             </div>
         </div>
 
-        <!-- 2. 数学チャートタブ (難易度①〜⑤) -->
+        <!-- 2. 数学チャートタブ -->
         <div id="tab-math" class="hidden space-y-4">
             <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80">
                 <h2 class="text-sm font-black text-indigo-950 mb-1">📐 青チャート（全795題・例題チェック）</h2>
@@ -235,7 +248,7 @@
                                 <th class="py-2 px-1">数学</th>
                                 <th class="py-2 px-1">物理</th>
                                 <th class="py-2 px-1">化学</th>
-                                <th class="py-2 px-1">暗記</th>
+                                <th class="py-2 px-1">英/古単語</th>
                             </tr>
                         </thead>
                         <tbody id="settings-table-body" class="divide-y divide-slate-100"></tbody>
@@ -284,7 +297,6 @@
     </main>
 
     <script>
-        // 青チャート目次 ＋ 難易度①〜⑤（数字表記）
         const mathData = [
             { id: "m1", name: "数と式", count: 43, start: 1, category: "1A", diffs: [1,2,2,3,1,2,3,4,2,3, 1,2,3,2,4,1,2,3,3,5, 1,2,2,3,1,2,3,4,2,3, 1,2,3,2,4,1,2,3,3,5, 1,2,3] },
             { id: "m2", name: "集合と命題", count: 20, start: 44, category: "1A", diffs: [1,2,1,2,3,2,1,3,2,4, 1,2,1,2,3,2,1,3,2,3] },
@@ -308,11 +320,12 @@
             { id: "m20", name: "空間ベクトル", count: 46, start: 44, category: "2B_C", diffs: Array(46).fill(4) }
         ];
 
+        // 各モード＋2問アップ、単語目標各20語に設定
         let defaultTargets = {
-            weekday_club: { name: "平日部活あり", time: "自習 1.5h", mathVideo: 5, mathNoVideo: 8, phyVideo: 3, phyNoVideo: 5, chemVideo: 3, chemNoVideo: 5, vocab: 50 },
-            weekday_noclub: { name: "平日部活なし", time: "自習 3.5h", mathVideo: 8, mathNoVideo: 12, phyVideo: 5, phyNoVideo: 7, chemVideo: 5, chemNoVideo: 7, vocab: 100 },
-            holiday_club: { name: "休日部活あり", time: "自習 3.5h", mathVideo: 8, mathNoVideo: 12, phyVideo: 5, phyNoVideo: 7, chemVideo: 5, chemNoVideo: 7, vocab: 100 },
-            holiday_noclub: { name: "休日部活なし", time: "自習 5.5h", mathVideo: 12, mathNoVideo: 16, phyVideo: 7, phyNoVideo: 10, chemVideo: 7, chemNoVideo: 10, vocab: 100 }
+            weekday_club: { name: "平日部活あり", time: "自習 1.5h", mathVideo: 7, mathNoVideo: 10, phyVideo: 5, phyNoVideo: 7, chemVideo: 5, chemNoVideo: 7, eng: 20, kobun: 20 },
+            weekday_noclub: { name: "平日部活なし", time: "自習 3.5h", mathVideo: 10, mathNoVideo: 14, phyVideo: 7, phyNoVideo: 9, chemVideo: 7, chemNoVideo: 9, eng: 20, kobun: 20 },
+            holiday_club: { name: "休日部活あり", time: "自習 3.5h", mathVideo: 10, mathNoVideo: 14, phyVideo: 7, phyNoVideo: 9, chemVideo: 7, chemNoVideo: 9, eng: 20, kobun: 20 },
+            holiday_noclub: { name: "休日部活なし", time: "自習 5.5h", mathVideo: 14, mathNoVideo: 18, phyVideo: 9, phyNoVideo: 12, chemVideo: 9, chemNoVideo: 12, eng: 20, kobun: 20 }
         };
 
         const circNums = ["", "①", "②", "③", "④", "⑤"];
@@ -320,7 +333,7 @@
         let currentMode = "weekday_club";
         let hasVideo = true;
         let itemProgress = JSON.parse(localStorage.getItem('study_item_progress')) || {};
-        let todayActual = JSON.parse(localStorage.getItem('study_today_actual')) || { phy: 0, chem: 0, vocab: 0 };
+        let todayActual = JSON.parse(localStorage.getItem('study_today_actual')) || { phy: 0, chem: 0, eng: 0, kobun: 0 };
         let scienceTotal = JSON.parse(localStorage.getItem('study_science_total')) || { phy: 0, chem: 0 };
         let vocabTotal = JSON.parse(localStorage.getItem('study_vocab_total')) || { eng: 0, kobun: 0 };
         let calendarRecords = JSON.parse(localStorage.getItem('study_calendar')) || {};
@@ -371,11 +384,15 @@
             const mathTarget = hasVideo ? target.mathVideo : target.mathNoVideo;
             const phyTarget = hasVideo ? target.phyVideo : target.phyNoVideo;
             const chemTarget = hasVideo ? target.chemVideo : target.chemNoVideo;
+            const engTarget = target.eng || 20;
+            const kobunTarget = target.kobun || 20;
 
             document.getElementById('today-mode-label').innerText = `${target.name} (${hasVideo ? '映像あり' : '映像なし'})`;
             document.getElementById('target-math-num').innerText = mathTarget;
             document.getElementById('target-phy-num').innerText = phyTarget;
             document.getElementById('target-chem-num').innerText = chemTarget;
+            document.getElementById('target-eng-num').innerText = engTarget;
+            document.getElementById('target-kobun-num').innerText = kobunTarget;
 
             let mathDoneCount = 0;
             Object.values(itemProgress).forEach(status => {
@@ -385,12 +402,16 @@
             document.getElementById('actual-math-num').innerText = mathDoneCount;
             document.getElementById('actual-phy-num').innerText = todayActual.phy;
             document.getElementById('actual-chem-num').innerText = todayActual.chem;
-            document.getElementById('actual-vocab-num').innerText = todayActual.vocab;
+            document.getElementById('actual-eng-num').innerText = todayActual.eng || 0;
+            document.getElementById('actual-kobun-num').innerText = todayActual.kobun || 0;
 
             const mathRate = Math.min(100, (mathDoneCount / mathTarget) * 100);
             const phyRate = Math.min(100, (todayActual.phy / phyTarget) * 100);
             const chemRate = Math.min(100, (todayActual.chem / chemTarget) * 100);
-            const totalRate = Math.round((mathRate + phyRate + chemRate) / 3);
+            const engRate = Math.min(100, ((todayActual.eng || 0) / engTarget) * 100);
+            const kobunRate = Math.min(100, ((todayActual.kobun || 0) / kobunTarget) * 100);
+
+            const totalRate = Math.round((mathRate + phyRate + chemRate + engRate + kobunRate) / 5);
 
             document.getElementById('today-rate-text').innerText = `${totalRate}%`;
 
@@ -409,8 +430,8 @@
             updateTodayStats();
         }
 
-        function adjustVocab(amt) {
-            todayActual.vocab = Math.max(0, todayActual.vocab + amt);
+        function adjustVocab(type, amt) {
+            todayActual[type] = Math.max(0, (todayActual[type] || 0) + amt);
             localStorage.setItem('study_today_actual', JSON.stringify(todayActual));
             updateTodayStats();
         }
@@ -559,7 +580,7 @@
                         <td class="py-2 px-1 font-bold text-indigo-600">${t.mathVideo}/${t.mathNoVideo}問</td>
                         <td class="py-2 px-1 text-slate-600">${t.phyVideo}/${t.phyNoVideo}問</td>
                         <td class="py-2 px-1 text-slate-600">${t.chemVideo}/${t.chemNoVideo}問</td>
-                        <td class="py-2 px-1 text-[10px] text-purple-700 font-bold">${t.vocab}語</td>
+                        <td class="py-2 px-1 text-[10px] text-purple-700 font-bold">英${t.eng||20} / 古${t.kobun||20}語</td>
                     </tr>
                 `;
             });
@@ -573,22 +594,35 @@
                 container.innerHTML += `
                     <div class="bg-indigo-50/40 p-3 rounded-xl border border-indigo-100 space-y-2">
                         <div class="font-extrabold text-indigo-900 text-xs">${t.name}</div>
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
                             <div>
-                                <label class="text-[10px] font-bold text-slate-500 block">数学(映像有)</label>
-                                <input type="number" id="${key}-mathVideo" value="${t.mathVideo}" class="w-full bg-white border border-slate-200 rounded-lg p-1 font-bold text-center text-xs">
+                                <label class="text-[10px] font-bold text-slate-500 block">数学(映像有/無)</label>
+                                <div class="flex gap-1">
+                                    <input type="number" id="${key}-mathVideo" value="${t.mathVideo}" class="w-full bg-white border border-slate-200 rounded-lg p-1 font-bold text-center text-xs">
+                                    <input type="number" id="${key}-mathNoVideo" value="${t.mathNoVideo}" class="w-full bg-white border border-slate-200 rounded-lg p-1 font-bold text-center text-xs">
+                                </div>
                             </div>
                             <div>
-                                <label class="text-[10px] font-bold text-slate-500 block">数学(映像無)</label>
-                                <input type="number" id="${key}-mathNoVideo" value="${t.mathNoVideo}" class="w-full bg-white border border-slate-200 rounded-lg p-1 font-bold text-center text-xs">
+                                <label class="text-[10px] font-bold text-slate-500 block">物理(映像有/無)</label>
+                                <div class="flex gap-1">
+                                    <input type="number" id="${key}-phyVideo" value="${t.phyVideo}" class="w-full bg-white border border-slate-200 rounded-lg p-1 font-bold text-center text-xs">
+                                    <input type="number" id="${key}-phyNoVideo" value="${t.phyNoVideo}" class="w-full bg-white border border-slate-200 rounded-lg p-1 font-bold text-center text-xs">
+                                </div>
                             </div>
                             <div>
-                                <label class="text-[10px] font-bold text-slate-500 block">物理(映像有)</label>
-                                <input type="number" id="${key}-phyVideo" value="${t.phyVideo}" class="w-full bg-white border border-slate-200 rounded-lg p-1 font-bold text-center text-xs">
+                                <label class="text-[10px] font-bold text-slate-500 block">化学(映像有/無)</label>
+                                <div class="flex gap-1">
+                                    <input type="number" id="${key}-chemVideo" value="${t.chemVideo}" class="w-full bg-white border border-slate-200 rounded-lg p-1 font-bold text-center text-xs">
+                                    <input type="number" id="${key}-chemNoVideo" value="${t.chemNoVideo}" class="w-full bg-white border border-slate-200 rounded-lg p-1 font-bold text-center text-xs">
+                                </div>
                             </div>
                             <div>
-                                <label class="text-[10px] font-bold text-slate-500 block">物理(映像無)</label>
-                                <input type="number" id="${key}-phyNoVideo" value="${t.phyNoVideo}" class="w-full bg-white border border-slate-200 rounded-lg p-1 font-bold text-center text-xs">
+                                <label class="text-[10px] font-bold text-slate-500 block">英単語 目標</label>
+                                <input type="number" id="${key}-eng" value="${t.eng || 20}" class="w-full bg-white border border-slate-200 rounded-lg p-1 font-bold text-center text-xs">
+                            </div>
+                            <div>
+                                <label class="text-[10px] font-bold text-slate-500 block">古文単語 目標</label>
+                                <input type="number" id="${key}-kobun" value="${t.kobun || 20}" class="w-full bg-white border border-slate-200 rounded-lg p-1 font-bold text-center text-xs">
                             </div>
                         </div>
                     </div>
@@ -602,6 +636,10 @@
                 customTargets[key].mathNoVideo = parseInt(document.getElementById(`${key}-mathNoVideo`).value) || 0;
                 customTargets[key].phyVideo = parseInt(document.getElementById(`${key}-phyVideo`).value) || 0;
                 customTargets[key].phyNoVideo = parseInt(document.getElementById(`${key}-phyNoVideo`).value) || 0;
+                customTargets[key].chemVideo = parseInt(document.getElementById(`${key}-chemVideo`).value) || 0;
+                customTargets[key].chemNoVideo = parseInt(document.getElementById(`${key}-chemNoVideo`).value) || 0;
+                customTargets[key].eng = parseInt(document.getElementById(`${key}-eng`).value) || 0;
+                customTargets[key].kobun = parseInt(document.getElementById(`${key}-kobun`).value) || 0;
             });
             localStorage.setItem('custom_targets', JSON.stringify(customTargets));
             renderSettingsTable();
