@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>最強！高校2年スタディ・コンプリートアプリ</title>
+    <title>高2スタディ・コンプリートアプリ</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- Chart.js -->
@@ -16,171 +16,175 @@
         body { font-family: 'M PLUS Rounded 1c', sans-serif; }
     </style>
 </head>
-<body class="bg-indigo-50 text-slate-800 min-h-screen pb-16">
+<body class="bg-slate-50 text-slate-800 min-h-screen pb-16">
 
     <!-- ヘッダー -->
-    <header class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white shadow-lg sticky top-0 z-50">
+    <header class="bg-indigo-600 text-white shadow-md sticky top-0 z-50">
         <div class="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
-            <h1 class="text-xl md:text-2xl font-extrabold flex items-center gap-2">
+            <h1 class="text-lg md:text-xl font-black flex items-center gap-2">
                 🚀 <span>高2・3月末コンプリート作戦</span>
             </h1>
-            <div id="countdown-badge" class="bg-white/25 px-3 py-1 rounded-full text-sm font-bold backdrop-blur-sm">
+            <div id="countdown-badge" class="bg-indigo-700/60 px-3 py-1 rounded-full text-xs font-bold border border-indigo-400/30">
                 3月末まで 121日
             </div>
         </div>
     </header>
 
     <!-- メインコンテンツ -->
-    <main class="max-w-4xl mx-auto px-4 py-6">
+    <main class="max-w-4xl mx-auto px-4 py-5">
 
-        <!-- タブナビゲーション -->
-        <div class="flex bg-white p-1.5 rounded-2xl shadow-md mb-6 gap-1 overflow-x-auto">
-            <button onclick="switchTab('task')" id="tab-btn-task" class="flex-1 py-2.5 px-3 rounded-xl font-bold text-sm transition-all bg-indigo-600 text-white shadow-sm whitespace-nowrap">📅 今日のタスク</button>
-            <button onclick="switchTab('math')" id="tab-btn-math" class="flex-1 py-2.5 px-3 rounded-xl font-bold text-sm transition-all text-slate-600 hover:bg-slate-100 whitespace-nowrap">📐 数学チャート</button>
-            <button onclick="switchTab('science')" id="tab-btn-science" class="flex-1 py-2.5 px-3 rounded-xl font-bold text-sm transition-all text-slate-600 hover:bg-slate-100 whitespace-nowrap">⚛️ 物理・化学</button>
-            <button onclick="switchTab('vocab')" id="tab-btn-vocab" class="flex-1 py-2.5 px-3 rounded-xl font-bold text-sm transition-all text-slate-600 hover:bg-slate-100 whitespace-nowrap">📖 暗記単語</button>
-            <button onclick="switchTab('calendar')" id="tab-btn-calendar" class="flex-1 py-2.5 px-3 rounded-xl font-bold text-sm transition-all text-slate-600 hover:bg-slate-100 whitespace-nowrap">🗓️ カレンダー</button>
-            <button onclick="switchTab('settings')" id="tab-btn-settings" class="flex-1 py-2.5 px-3 rounded-xl font-bold text-sm transition-all text-slate-600 hover:bg-slate-100 whitespace-nowrap">📋 設定一覧</button>
-            <button onclick="switchTab('custom')" id="tab-btn-custom" class="flex-1 py-2.5 px-3 rounded-xl font-bold text-sm transition-all text-slate-600 hover:bg-slate-100 whitespace-nowrap">⚙️ 目標変更</button>
-            <button onclick="switchTab('progress')" id="tab-btn-progress" class="flex-1 py-2.5 px-3 rounded-xl font-bold text-sm transition-all text-slate-600 hover:bg-slate-100 whitespace-nowrap">📊 全体進捗</button>
+        <!-- スマートなタブナビゲーション -->
+        <div class="flex bg-slate-200/80 p-1 rounded-2xl shadow-inner mb-5 gap-1 overflow-x-auto">
+            <button onclick="switchTab('task')" id="tab-btn-task" class="flex-1 py-2 px-3 rounded-xl font-bold text-xs transition-all bg-indigo-600 text-white shadow-sm whitespace-nowrap">📅 今日</button>
+            <button onclick="switchTab('math')" id="tab-btn-math" class="flex-1 py-2 px-3 rounded-xl font-bold text-xs transition-all text-slate-600 hover:bg-slate-300/50 whitespace-nowrap">📐 数学</button>
+            <button onclick="switchTab('science')" id="tab-btn-science" class="flex-1 py-2 px-3 rounded-xl font-bold text-xs transition-all text-slate-600 hover:bg-slate-300/50 whitespace-nowrap">⚛️ 理科</button>
+            <button onclick="switchTab('vocab')" id="tab-btn-vocab" class="flex-1 py-2 px-3 rounded-xl font-bold text-xs transition-all text-slate-600 hover:bg-slate-300/50 whitespace-nowrap">📖 単語</button>
+            <button onclick="switchTab('calendar')" id="tab-btn-calendar" class="flex-1 py-2 px-3 rounded-xl font-bold text-xs transition-all text-slate-600 hover:bg-slate-300/50 whitespace-nowrap">🗓️ カレンダー</button>
+            <button onclick="switchTab('settings')" id="tab-btn-settings" class="flex-1 py-2 px-3 rounded-xl font-bold text-xs transition-all text-slate-600 hover:bg-slate-300/50 whitespace-nowrap">📋 設定</button>
+            <button onclick="switchTab('custom')" id="tab-btn-custom" class="flex-1 py-2 px-3 rounded-xl font-bold text-xs transition-all text-slate-600 hover:bg-slate-300/50 whitespace-nowrap">⚙️ カスタム</button>
+            <button onclick="switchTab('progress')" id="tab-btn-progress" class="flex-1 py-2 px-3 rounded-xl font-bold text-xs transition-all text-slate-600 hover:bg-slate-300/50 whitespace-nowrap">📊 進捗</button>
         </div>
 
         <!-- 1. 今日のタスク＆実績入力タブ -->
-        <div id="tab-task" class="space-y-6">
+        <div id="tab-task" class="space-y-4">
             <!-- モード選択 ＆ 映像授業 -->
-            <div class="bg-white rounded-3xl p-6 shadow-md border-2 border-indigo-100">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4">
-                    <div>
-                        <h2 class="text-lg font-extrabold text-indigo-900 flex items-center gap-2">🎮 本日の学習モード設定</h2>
-                        <p class="text-xs text-slate-500">今日のスケジュールに合わせて選ぼう！</p>
-                    </div>
-                    <div class="flex items-center bg-indigo-50 p-1.5 rounded-2xl border border-indigo-200">
-                        <span class="text-xs font-bold text-indigo-800 px-2">🎬 映像授業:</span>
-                        <button onclick="toggleVideo(true)" id="video-btn-yes" class="px-3 py-1 text-xs font-bold rounded-xl transition-all bg-indigo-600 text-white shadow">あり (1.5h)</button>
-                        <button onclick="toggleVideo(false)" id="video-btn-no" class="px-3 py-1 text-xs font-bold rounded-xl transition-all text-slate-600">なし (自習増量)</button>
+            <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200/80">
+                <div class="flex justify-between items-center mb-3">
+                    <span class="text-xs font-black text-indigo-900 flex items-center gap-1">🎮 今日のスケジュール</span>
+                    <div class="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200">
+                        <span class="text-[11px] font-bold text-slate-600 px-1.5">🎬 映像:</span>
+                        <button onclick="toggleVideo(true)" id="video-btn-yes" class="px-2.5 py-0.5 text-[11px] font-bold rounded-lg transition-all bg-indigo-600 text-white shadow-sm">あり (1.5h)</button>
+                        <button onclick="toggleVideo(false)" id="video-btn-no" class="px-2.5 py-0.5 text-[11px] font-bold rounded-lg transition-all text-slate-500">なし</button>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-2.5">
-                    <button onclick="setMode('weekday_club')" id="btn-weekday_club" class="p-3 rounded-2xl border-2 text-left transition-all bg-indigo-50 border-indigo-300">
-                        <div class="text-xs font-bold text-indigo-600">平日 (3h)</div>
-                        <div class="text-sm font-extrabold text-slate-800">部活あり</div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                    <button onclick="setMode('weekday_club')" id="btn-weekday_club" class="p-2.5 rounded-xl border text-left transition-all bg-indigo-50/70 border-indigo-300">
+                        <div class="text-[10px] font-bold text-indigo-600">平日 (3h)</div>
+                        <div class="text-xs font-black text-slate-800">部活あり</div>
                     </button>
-                    <button onclick="setMode('weekday_noclub')" id="btn-weekday_noclub" class="p-3 rounded-2xl border-2 text-left transition-all bg-white border-slate-200">
-                        <div class="text-xs font-bold text-slate-500">火曜 (5h)</div>
-                        <div class="text-sm font-extrabold text-slate-800">部活なし</div>
+                    <button onclick="setMode('weekday_noclub')" id="btn-weekday_noclub" class="p-2.5 rounded-xl border text-left transition-all bg-white border-slate-200">
+                        <div class="text-[10px] font-bold text-slate-400">火曜 (5h)</div>
+                        <div class="text-xs font-black text-slate-800">部活なし</div>
                     </button>
-                    <button onclick="setMode('holiday_club')" id="btn-holiday_club" class="p-3 rounded-2xl border-2 text-left transition-all bg-white border-slate-200">
-                        <div class="text-xs font-bold text-slate-500">土曜・長期休 (5h)</div>
-                        <div class="text-sm font-extrabold text-slate-800">部活あり</div>
+                    <button onclick="setMode('holiday_club')" id="btn-holiday_club" class="p-2.5 rounded-xl border text-left transition-all bg-white border-slate-200">
+                        <div class="text-[10px] font-bold text-slate-400">土曜・休 (5h)</div>
+                        <div class="text-xs font-black text-slate-800">部活あり</div>
                     </button>
-                    <button onclick="setMode('holiday_noclub')" id="btn-holiday_noclub" class="p-3 rounded-2xl border-2 text-left transition-all bg-white border-slate-200">
-                        <div class="text-xs font-bold text-slate-500">日祝 (7h)</div>
-                        <div class="text-sm font-extrabold text-slate-800">部活なし</div>
+                    <button onclick="setMode('holiday_noclub')" id="btn-holiday_noclub" class="p-2.5 rounded-xl border text-left transition-all bg-white border-slate-200">
+                        <div class="text-[10px] font-bold text-slate-400">日祝 (7h)</div>
+                        <div class="text-xs font-black text-slate-800">部活なし</div>
                     </button>
                 </div>
             </div>
 
             <!-- 本日のノルマ＆実績入力・メダル判定 -->
-            <div class="bg-white rounded-3xl p-6 shadow-md border-2 border-indigo-100 space-y-6">
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80 space-y-4">
                 <div class="flex justify-between items-center">
-                    <h2 class="text-lg font-extrabold text-indigo-900 flex items-center gap-2">✨ 本日のノルマと実績入力</h2>
-                    <span id="today-mode-label" class="bg-indigo-100 text-indigo-800 text-xs font-bold px-3 py-1 rounded-full">平日部活あり (映像授業あり)</span>
+                    <h2 class="text-sm font-black text-indigo-950">✨ 本日のノルマと実績</h2>
+                    <span id="today-mode-label" class="bg-indigo-50 text-indigo-700 text-[11px] font-bold px-2.5 py-0.5 rounded-md border border-indigo-100">平日部活あり</span>
                 </div>
 
-                <!-- 達成度＆メダルバナー -->
-                <div class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white p-5 rounded-2xl shadow-md flex items-center justify-between">
-                    <div>
-                        <div class="text-xs font-bold opacity-90">本日の総合達成度</div>
-                        <div id="today-rate-text" class="text-3xl font-black">0%</div>
+                <!-- 今日の達成度 ＆ 直近1週間のメダル -->
+                <div class="bg-slate-900 text-white p-4 rounded-xl shadow-sm space-y-3">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-[10px] font-bold text-slate-400">本日の総合達成度</div>
+                            <div id="today-rate-text" class="text-2xl font-black text-indigo-300">0%</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-[10px] font-bold text-slate-400">獲得メダル</div>
+                            <div id="today-medal-icon" class="text-2xl">🟦</div>
+                        </div>
                     </div>
-                    <div class="text-right">
-                        <div class="text-xs font-bold opacity-90">獲得メダル</div>
-                        <div id="today-medal-icon" class="text-3xl">🟦</div>
+                    <!-- 1週間メダル欄 -->
+                    <div class="border-t border-slate-800 pt-2 flex items-center justify-between">
+                        <span class="text-[10px] font-bold text-slate-400">直近1週間のメダル:</span>
+                        <div id="weekly-medals" class="flex gap-1 text-sm"></div>
                     </div>
                 </div>
 
                 <!-- 各科目の実績カウンター -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <!-- 数学 -->
-                    <div class="bg-indigo-50/60 p-4 rounded-2xl border border-indigo-100 flex items-center justify-between">
+                    <div class="bg-indigo-50/50 p-3 rounded-xl border border-indigo-100 flex items-center justify-between">
                         <div>
-                            <div class="font-extrabold text-indigo-900 text-sm">📐 数学チャート (〇/△/×)</div>
-                            <div class="text-xs text-indigo-600 font-bold">目標: <span id="target-math-num">5</span> 問</div>
+                            <div class="font-bold text-indigo-950 text-xs">📐 数学チャート (〇/△/×)</div>
+                            <div class="text-[10px] text-indigo-600 font-bold">目標: <span id="target-math-num">5</span> 問</div>
                         </div>
                         <div class="text-right">
-                            <span id="actual-math-num" class="text-xl font-black text-indigo-900">0</span> <span class="text-xs font-bold text-slate-600">問完了</span>
+                            <span id="actual-math-num" class="text-lg font-black text-indigo-900">0</span> <span class="text-[10px] font-bold text-slate-500">問完了</span>
                         </div>
                     </div>
                     <!-- 物理 -->
-                    <div class="bg-emerald-50/60 p-4 rounded-2xl border border-emerald-100 flex items-center justify-between">
+                    <div class="bg-emerald-50/50 p-3 rounded-xl border border-emerald-100 flex items-center justify-between">
                         <div>
-                            <div class="font-extrabold text-emerald-900 text-sm">⚛️ 物理</div>
-                            <div class="text-xs text-emerald-600 font-bold">目標: <span id="target-phy-num">3</span> 問</div>
+                            <div class="font-bold text-emerald-950 text-xs">⚛️ 物理</div>
+                            <div class="text-[10px] text-emerald-600 font-bold">目標: <span id="target-phy-num">3</span> 問</div>
                         </div>
-                        <div class="flex items-center gap-2">
-                            <button onclick="adjustScience('phy', -1)" class="w-8 h-8 rounded-xl bg-white border border-emerald-200 font-bold text-emerald-700 shadow-sm">-</button>
-                            <span id="actual-phy-num" class="text-xl font-black text-emerald-900 w-8 text-center">0</span>
-                            <button onclick="adjustScience('phy', 1)" class="w-8 h-8 rounded-xl bg-emerald-600 text-white font-bold shadow-sm">+</button>
+                        <div class="flex items-center gap-1.5">
+                            <button onclick="adjustScience('phy', -1)" class="w-7 h-7 rounded-lg bg-white border border-emerald-200 font-bold text-emerald-700 shadow-sm text-xs">-</button>
+                            <span id="actual-phy-num" class="text-base font-black text-emerald-900 w-6 text-center">0</span>
+                            <button onclick="adjustScience('phy', 1)" class="w-7 h-7 rounded-lg bg-emerald-600 text-white font-bold shadow-sm text-xs">+</button>
                         </div>
                     </div>
                     <!-- 化学 -->
-                    <div class="bg-amber-50/60 p-4 rounded-2xl border border-amber-100 flex items-center justify-between">
+                    <div class="bg-amber-50/50 p-3 rounded-xl border border-amber-100 flex items-center justify-between">
                         <div>
-                            <div class="font-extrabold text-amber-900 text-sm">🧪 化学</div>
-                            <div class="text-xs text-amber-600 font-bold">目標: <span id="target-chem-num">3</span> 問</div>
+                            <div class="font-bold text-amber-950 text-xs">🧪 化学</div>
+                            <div class="text-[10px] text-amber-600 font-bold">目標: <span id="target-chem-num">3</span> 問</div>
                         </div>
-                        <div class="flex items-center gap-2">
-                            <button onclick="adjustScience('chem', -1)" class="w-8 h-8 rounded-xl bg-white border border-amber-200 font-bold text-amber-700 shadow-sm">-</button>
-                            <span id="actual-chem-num" class="text-xl font-black text-amber-900 w-8 text-center">0</span>
-                            <button onclick="adjustScience('chem', 1)" class="w-8 h-8 rounded-xl bg-amber-600 text-white font-bold shadow-sm">+</button>
+                        <div class="flex items-center gap-1.5">
+                            <button onclick="adjustScience('chem', -1)" class="w-7 h-7 rounded-lg bg-white border border-amber-200 font-bold text-amber-700 shadow-sm text-xs">-</button>
+                            <span id="actual-chem-num" class="text-base font-black text-amber-900 w-6 text-center">0</span>
+                            <button onclick="adjustScience('chem', 1)" class="w-7 h-7 rounded-lg bg-amber-600 text-white font-bold shadow-sm text-xs">+</button>
                         </div>
                     </div>
                     <!-- 暗記科目 -->
-                    <div class="bg-purple-50/60 p-4 rounded-2xl border border-purple-100 flex items-center justify-between">
+                    <div class="bg-purple-50/50 p-3 rounded-xl border border-purple-100 flex items-center justify-between">
                         <div>
-                            <div class="font-extrabold text-purple-900 text-sm">📖 暗記単語</div>
-                            <div class="text-xs text-purple-600 font-bold">英/古文ルーティン</div>
+                            <div class="font-bold text-purple-950 text-xs">📖 暗記単語</div>
+                            <div class="text-[10px] text-purple-600 font-bold">英/古文ルーティン</div>
                         </div>
-                        <div class="flex items-center gap-2">
-                            <button onclick="adjustVocab(10)" class="px-3 py-1.5 rounded-xl bg-purple-600 text-white font-bold text-xs shadow-sm">+10語</button>
-                            <span id="actual-vocab-num" class="text-xl font-black text-purple-900">0</span> <span class="text-xs font-bold text-slate-600">語</span>
+                        <div class="flex items-center gap-1.5">
+                            <button onclick="adjustVocab(10)" class="px-2.5 py-1 rounded-lg bg-purple-600 text-white font-bold text-[11px] shadow-sm">+10語</button>
+                            <span id="actual-vocab-num" class="text-base font-black text-purple-900">0</span> <span class="text-[10px] font-bold text-slate-500">語</span>
                         </div>
                     </div>
                 </div>
 
-                <button onclick="saveTodayRecord()" class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-extrabold py-3.5 rounded-2xl shadow-lg hover:opacity-95 transition-all">
-                    💾 本日の実績をカレンダーに記録する！
+                <button onclick="saveTodayRecord()" class="w-full bg-indigo-600 text-white font-extrabold py-3 rounded-xl shadow hover:bg-indigo-700 transition-all text-xs">
+                    💾 本日の実績を保存・更新する
                 </button>
             </div>
         </div>
 
-        <!-- 2. 数学チャートタブ (難易度①〜⑤ ＆ 〇△×入力) -->
-        <div id="tab-math" class="hidden space-y-6">
-            <div class="bg-white rounded-3xl p-6 shadow-md border-2 border-indigo-100">
-                <h2 class="text-lg font-extrabold text-indigo-900 mb-2">📐 青チャート（数学ⅠA・ⅡBC 全795題）</h2>
-                <p class="text-xs text-slate-500 mb-4">例題をタップして状態を切り替え：未 ➔ 〇(完了) ➔ △(復習) ➔ ×(苦手) ※どれでも解いたらカウント！</p>
-                <div id="math-units-container" class="space-y-6"></div>
+        <!-- 2. 数学チャートタブ (難易度①〜⑤) -->
+        <div id="tab-math" class="hidden space-y-4">
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80">
+                <h2 class="text-sm font-black text-indigo-950 mb-1">📐 青チャート（全795題・例題チェック）</h2>
+                <p class="text-[11px] text-slate-500 mb-4">タップで切替：未 ➔ 〇(完了) ➔ △(復習) ➔ ×(苦手) ※難易度①〜⑤表記</p>
+                <div id="math-units-container" class="space-y-4"></div>
             </div>
         </div>
 
         <!-- 3. 物理・化学タブ -->
-        <div id="tab-science" class="hidden space-y-6">
-            <div class="bg-white rounded-3xl p-6 shadow-md border-2 border-indigo-100">
-                <h2 class="text-lg font-extrabold text-indigo-900 mb-2">⚛️ 物理・化学 累計進捗</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-                    <div class="bg-emerald-50/50 p-5 rounded-2xl border border-emerald-200 space-y-3">
-                        <h3 class="font-extrabold text-emerald-900">⚛️ 物理 累計完了問題数</h3>
+        <div id="tab-science" class="hidden space-y-4">
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80">
+                <h2 class="text-sm font-black text-indigo-950 mb-3">⚛️ 物理・化学 累計消化数</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-emerald-50/50 p-4 rounded-xl border border-emerald-100 space-y-2">
+                        <div class="font-extrabold text-emerald-950 text-xs">⚛️ 物理 累計問題数</div>
                         <div class="flex items-center gap-2">
-                            <input type="number" id="phy-total" value="0" onchange="saveScienceTotal()" class="w-28 bg-white border border-emerald-300 rounded-xl p-2 font-extrabold text-center text-lg">
-                            <span class="font-bold text-slate-600">題</span>
+                            <input type="number" id="phy-total" value="0" onchange="saveScienceTotal()" class="w-24 bg-white border border-emerald-200 rounded-lg p-1.5 font-black text-center text-sm">
+                            <span class="text-xs font-bold text-slate-600">題完了</span>
                         </div>
                     </div>
-                    <div class="bg-amber-50/50 p-5 rounded-2xl border border-amber-200 space-y-3">
-                        <h3 class="font-extrabold text-amber-900">🧪 化学 累計完了問題数</h3>
+                    <div class="bg-amber-50/50 p-4 rounded-xl border border-amber-100 space-y-2">
+                        <div class="font-extrabold text-amber-950 text-xs">🧪 化学 累計問題数</div>
                         <div class="flex items-center gap-2">
-                            <input type="number" id="chem-total" value="0" onchange="saveScienceTotal()" class="w-28 bg-white border border-amber-300 rounded-xl p-2 font-extrabold text-center text-lg">
-                            <span class="font-bold text-slate-600">題</span>
+                            <input type="number" id="chem-total" value="0" onchange="saveScienceTotal()" class="w-24 bg-white border border-amber-200 rounded-lg p-1.5 font-black text-center text-sm">
+                            <span class="text-xs font-bold text-slate-600">題完了</span>
                         </div>
                     </div>
                 </div>
@@ -188,22 +192,22 @@
         </div>
 
         <!-- 4. 暗記単語タブ -->
-        <div id="tab-vocab" class="hidden space-y-6">
-            <div class="bg-white rounded-3xl p-6 shadow-md border-2 border-indigo-100">
-                <h2 class="text-lg font-extrabold text-indigo-900 mb-2">📖 暗記単語 累計進捗</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-                    <div class="bg-purple-50/50 p-5 rounded-2xl border border-purple-200 space-y-3">
-                        <h3 class="font-extrabold text-purple-900">🔤 英単語 累計完了数</h3>
+        <div id="tab-vocab" class="hidden space-y-4">
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80">
+                <h2 class="text-sm font-black text-indigo-950 mb-3">📖 暗記単語 累計消化数</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-purple-50/50 p-4 rounded-xl border border-purple-100 space-y-2">
+                        <div class="font-extrabold text-purple-950 text-xs">🔤 英単語 累計</div>
                         <div class="flex items-center gap-2">
-                            <input type="number" id="vocab-eng-total" value="0" onchange="saveVocabTotal()" class="w-28 bg-white border border-purple-300 rounded-xl p-2 font-extrabold text-center text-lg">
-                            <span class="font-bold text-slate-600">語</span>
+                            <input type="number" id="vocab-eng-total" value="0" onchange="saveVocabTotal()" class="w-24 bg-white border border-purple-200 rounded-lg p-1.5 font-black text-center text-sm">
+                            <span class="text-xs font-bold text-slate-600">語完了</span>
                         </div>
                     </div>
-                    <div class="bg-pink-50/50 p-5 rounded-2xl border border-pink-200 space-y-3">
-                        <h3 class="font-extrabold text-pink-900">📜 古文単語 累計完了数</h3>
+                    <div class="bg-pink-50/50 p-4 rounded-xl border border-pink-100 space-y-2">
+                        <div class="font-extrabold text-pink-950 text-xs">📜 古文単語 累計</div>
                         <div class="flex items-center gap-2">
-                            <input type="number" id="vocab-kobun-total" value="0" onchange="saveVocabTotal()" class="w-28 bg-white border border-pink-300 rounded-xl p-2 font-extrabold text-center text-lg">
-                            <span class="font-bold text-slate-600">語</span>
+                            <input type="number" id="vocab-kobun-total" value="0" onchange="saveVocabTotal()" class="w-24 bg-white border border-pink-200 rounded-lg p-1.5 font-black text-center text-sm">
+                            <span class="text-xs font-bold text-slate-600">語完了</span>
                         </div>
                     </div>
                 </div>
@@ -211,28 +215,27 @@
         </div>
 
         <!-- 5. カレンダータブ -->
-        <div id="tab-calendar" class="hidden space-y-6">
-            <div class="bg-white rounded-3xl p-6 shadow-md border-2 border-indigo-100">
-                <h2 class="text-lg font-extrabold text-indigo-900 mb-2">🗓️ スタディ・カレンダー</h2>
-                <p class="text-xs text-slate-500 mb-4">毎日の達成度に応じたメダル（🥇🥈🥉🟦）が記録されます！</p>
-                <div id="calendar-grid" class="grid grid-cols-7 gap-2"></div>
+        <div id="tab-calendar" class="hidden space-y-4">
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80">
+                <h2 class="text-sm font-black text-indigo-950 mb-1">🗓️ スタディ・カレンダー</h2>
+                <p class="text-[11px] text-slate-500 mb-3">毎日の達成度に応じたメダル（🥇🥈🥉🟦）のログです</p>
+                <div id="calendar-grid" class="grid grid-cols-7 gap-1.5"></div>
             </div>
         </div>
 
         <!-- 6. 設定一覧タブ -->
-        <div id="tab-settings" class="hidden space-y-6">
-            <div class="bg-white rounded-3xl p-6 shadow-md border-2 border-indigo-100">
-                <h2 class="text-lg font-extrabold text-indigo-900 mb-4">📋 モード別・目標問題数一覧</h2>
+        <div id="tab-settings" class="hidden space-y-4">
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80">
+                <h2 class="text-sm font-black text-indigo-950 mb-3">📋 モード別・目標一覧</h2>
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left text-sm">
+                    <table class="w-full text-left text-xs">
                         <thead>
-                            <tr class="border-b-2 border-indigo-100 text-indigo-900">
-                                <th class="py-3 px-2">モード</th>
-                                <th class="py-3 px-2">自習時間</th>
-                                <th class="py-3 px-2">数学</th>
-                                <th class="py-3 px-2">物理</th>
-                                <th class="py-3 px-2">化学</th>
-                                <th class="py-3 px-2">暗記科目</th>
+                            <tr class="border-b border-slate-200 text-indigo-900 font-bold">
+                                <th class="py-2 px-1">モード</th>
+                                <th class="py-2 px-1">数学</th>
+                                <th class="py-2 px-1">物理</th>
+                                <th class="py-2 px-1">化学</th>
+                                <th class="py-2 px-1">暗記</th>
                             </tr>
                         </thead>
                         <tbody id="settings-table-body" class="divide-y divide-slate-100"></tbody>
@@ -242,37 +245,37 @@
         </div>
 
         <!-- 7. 目標カスタマイズタブ -->
-        <div id="tab-custom" class="hidden space-y-6">
-            <div class="bg-white rounded-3xl p-6 shadow-md border-2 border-indigo-100">
-                <h2 class="text-lg font-extrabold text-indigo-900 mb-2">⚙️ 1日の目標問題数をカスタム</h2>
-                <div id="custom-form-container" class="space-y-6 mt-4"></div>
-                <button onclick="saveCustomSettings()" class="w-full mt-6 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-extrabold py-3.5 rounded-2xl shadow-lg">💾 設定を保存する</button>
+        <div id="tab-custom" class="hidden space-y-4">
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80">
+                <h2 class="text-sm font-black text-indigo-950 mb-3">⚙️ ノルマ数の調整</h2>
+                <div id="custom-form-container" class="space-y-4"></div>
+                <button onclick="saveCustomSettings()" class="w-full mt-4 bg-indigo-600 text-white font-extrabold py-2.5 rounded-xl text-xs shadow">💾 設定を保存する</button>
             </div>
         </div>
 
         <!-- 8. 全体進捗タブ -->
-        <div id="tab-progress" class="hidden space-y-6">
-            <div class="bg-white rounded-3xl p-6 shadow-md border-2 border-indigo-100 flex flex-col items-center">
-                <h2 class="text-lg font-extrabold text-indigo-900 mb-2 w-full text-left">📊 3月末コンプリート進捗 (数学)</h2>
-                <div class="w-64 h-64 relative mb-6">
+        <div id="tab-progress" class="hidden space-y-4">
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80 flex flex-col items-center">
+                <h2 class="text-sm font-black text-indigo-950 mb-3 w-full text-left">📊 3月末コンプリート進捗 (数学)</h2>
+                <div class="w-56 h-56 relative mb-4">
                     <canvas id="progressChart"></canvas>
                 </div>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 w-full">
-                    <div class="bg-emerald-50 border-2 border-emerald-200 p-4 rounded-2xl text-center">
-                        <div class="text-xs font-bold text-emerald-700">完了 (〇)</div>
-                        <div id="stat-ok" class="text-2xl font-extrabold text-emerald-800">0題</div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-2.5 w-full">
+                    <div class="bg-emerald-50 border border-emerald-200 p-2.5 rounded-xl text-center">
+                        <div class="text-[10px] font-bold text-emerald-700">完了 (〇)</div>
+                        <div id="stat-ok" class="text-lg font-black text-emerald-800">0題</div>
                     </div>
-                    <div class="bg-amber-50 border-2 border-amber-200 p-4 rounded-2xl text-center">
-                        <div class="text-xs font-bold text-amber-700">要復習 (△)</div>
-                        <div id="stat-delta" class="text-2xl font-extrabold text-amber-800">0題</div>
+                    <div class="bg-amber-50 border border-amber-200 p-2.5 rounded-xl text-center">
+                        <div class="text-[10px] font-bold text-amber-700">要復習 (△)</div>
+                        <div id="stat-delta" class="text-lg font-black text-amber-800">0題</div>
                     </div>
-                    <div class="bg-rose-50 border-2 border-rose-200 p-4 rounded-2xl text-center">
-                        <div class="text-xs font-bold text-rose-700">苦手 (×)</div>
-                        <div id="stat-cross" class="text-2xl font-extrabold text-rose-800">0題</div>
+                    <div class="bg-rose-50 border border-rose-200 p-2.5 rounded-xl text-center">
+                        <div class="text-[10px] font-bold text-rose-700">苦手 (×)</div>
+                        <div id="stat-cross" class="text-lg font-black text-rose-800">0題</div>
                     </div>
-                    <div class="bg-slate-50 border-2 border-slate-200 p-4 rounded-2xl text-center">
-                        <div class="text-xs font-bold text-slate-600">未着手</div>
-                        <div id="stat-none" class="text-2xl font-extrabold text-slate-700">795題</div>
+                    <div class="bg-slate-50 border border-slate-200 p-2.5 rounded-xl text-center">
+                        <div class="text-[10px] font-bold text-slate-500">未着手</div>
+                        <div id="stat-none" class="text-lg font-black text-slate-700">795題</div>
                     </div>
                 </div>
             </div>
@@ -281,7 +284,7 @@
     </main>
 
     <script>
-        // サンプルの難易度（①〜⑤）を各例題に割り当て
+        // 青チャート目次 ＋ 難易度①〜⑤（数字表記）
         const mathData = [
             { id: "m1", name: "数と式", count: 43, start: 1, category: "1A", diffs: [1,2,2,3,1,2,3,4,2,3, 1,2,3,2,4,1,2,3,3,5, 1,2,2,3,1,2,3,4,2,3, 1,2,3,2,4,1,2,3,3,5, 1,2,3] },
             { id: "m2", name: "集合と命題", count: 20, start: 44, category: "1A", diffs: [1,2,1,2,3,2,1,3,2,4, 1,2,1,2,3,2,1,3,2,3] },
@@ -306,11 +309,13 @@
         ];
 
         let defaultTargets = {
-            weekday_club: { name: "平日部活あり (3h)", time: "自習 1.5h", mathVideo: 5, mathNoVideo: 8, phyVideo: 3, phyNoVideo: 5, chemVideo: 3, chemNoVideo: 5, vocab: 50 },
-            weekday_noclub: { name: "平日部活なし (5h)", time: "自習 3.5h", mathVideo: 8, mathNoVideo: 12, phyVideo: 5, phyNoVideo: 7, chemVideo: 5, chemNoVideo: 7, vocab: 100 },
-            holiday_club: { name: "休日部活あり (5h)", time: "自習 3.5h", mathVideo: 8, mathNoVideo: 12, phyVideo: 5, phyNoVideo: 7, chemVideo: 5, chemNoVideo: 7, vocab: 100 },
-            holiday_noclub: { name: "休日部活なし (7h)", time: "自習 5.5h", mathVideo: 12, mathNoVideo: 16, phyVideo: 7, phyNoVideo: 10, chemVideo: 7, chemNoVideo: 10, vocab: 100 }
+            weekday_club: { name: "平日部活あり", time: "自習 1.5h", mathVideo: 5, mathNoVideo: 8, phyVideo: 3, phyNoVideo: 5, chemVideo: 3, chemNoVideo: 5, vocab: 50 },
+            weekday_noclub: { name: "平日部活なし", time: "自習 3.5h", mathVideo: 8, mathNoVideo: 12, phyVideo: 5, phyNoVideo: 7, chemVideo: 5, chemNoVideo: 7, vocab: 100 },
+            holiday_club: { name: "休日部活あり", time: "自習 3.5h", mathVideo: 8, mathNoVideo: 12, phyVideo: 5, phyNoVideo: 7, chemVideo: 5, chemNoVideo: 7, vocab: 100 },
+            holiday_noclub: { name: "休日部活なし", time: "自習 5.5h", mathVideo: 12, mathNoVideo: 16, phyVideo: 7, phyNoVideo: 10, chemVideo: 7, chemNoVideo: 10, vocab: 100 }
         };
+
+        const circNums = ["", "①", "②", "③", "④", "⑤"];
 
         let currentMode = "weekday_club";
         let hasVideo = true;
@@ -336,10 +341,10 @@
         function switchTab(tabId) {
             ['task', 'math', 'science', 'vocab', 'calendar', 'settings', 'custom', 'progress'].forEach(t => {
                 document.getElementById(`tab-${t}`).classList.add('hidden');
-                document.getElementById(`tab-btn-${t}`).className = "flex-1 py-2.5 px-3 rounded-xl font-bold text-sm transition-all text-slate-600 hover:bg-slate-100 whitespace-nowrap";
+                document.getElementById(`tab-btn-${t}`).className = "flex-1 py-2 px-3 rounded-xl font-bold text-xs transition-all text-slate-600 hover:bg-slate-300/50 whitespace-nowrap";
             });
             document.getElementById(`tab-${tabId}`).classList.remove('hidden');
-            document.getElementById(`tab-btn-${tabId}`).className = "flex-1 py-2.5 px-3 rounded-xl font-bold text-sm transition-all bg-indigo-600 text-white shadow-sm whitespace-nowrap";
+            document.getElementById(`tab-btn-${tabId}`).className = "flex-1 py-2 px-3 rounded-xl font-bold text-xs transition-all bg-indigo-600 text-white shadow-sm whitespace-nowrap";
             if(tabId === 'task') updateTodayStats();
             if(tabId === 'progress') updateProgressChart();
             if(tabId === 'calendar') renderCalendar();
@@ -349,31 +354,29 @@
             currentMode = mode;
             ['weekday_club', 'weekday_noclub', 'holiday_club', 'holiday_noclub'].forEach(m => {
                 const btn = document.getElementById(`btn-${m}`);
-                btn.className = (m === mode) ? "p-3 rounded-2xl border-2 text-left transition-all bg-indigo-50 border-indigo-300 shadow-sm" : "p-3 rounded-2xl border-2 text-left transition-all bg-white border-slate-200";
+                btn.className = (m === mode) ? "p-2.5 rounded-xl border text-left transition-all bg-indigo-50/70 border-indigo-300 shadow-sm" : "p-2.5 rounded-xl border text-left transition-all bg-white border-slate-200";
             });
             updateTodayStats();
         }
 
         function toggleVideo(val) {
             hasVideo = val;
-            document.getElementById('video-btn-yes').className = val ? "px-3 py-1 text-xs font-bold rounded-xl transition-all bg-indigo-600 text-white shadow" : "px-3 py-1 text-xs font-bold rounded-xl transition-all text-slate-600";
-            document.getElementById('video-btn-no').className = !val ? "px-3 py-1 text-xs font-bold rounded-xl transition-all bg-indigo-600 text-white shadow" : "px-3 py-1 text-xs font-bold rounded-xl transition-all text-slate-600";
+            document.getElementById('video-btn-yes').className = val ? "px-2.5 py-0.5 text-[11px] font-bold rounded-lg transition-all bg-indigo-600 text-white shadow-sm" : "px-2.5 py-0.5 text-[11px] font-bold rounded-lg transition-all text-slate-500";
+            document.getElementById('video-btn-no').className = !val ? "px-2.5 py-0.5 text-[11px] font-bold rounded-lg transition-all bg-indigo-600 text-white shadow-sm" : "px-2.5 py-0.5 text-[11px] font-bold rounded-lg transition-all text-slate-500";
             updateTodayStats();
         }
 
-        // --- 本日の実績＆目標計算 ---
         function updateTodayStats() {
             const target = customTargets[currentMode];
             const mathTarget = hasVideo ? target.mathVideo : target.mathNoVideo;
             const phyTarget = hasVideo ? target.phyVideo : target.phyNoVideo;
             const chemTarget = hasVideo ? target.chemVideo : target.chemNoVideo;
 
-            document.getElementById('today-mode-label').innerText = `${target.name} (映像: ${hasVideo ? 'あり' : 'なし'})`;
+            document.getElementById('today-mode-label').innerText = `${target.name} (${hasVideo ? '映像あり' : '映像なし'})`;
             document.getElementById('target-math-num').innerText = mathTarget;
             document.getElementById('target-phy-num').innerText = phyTarget;
             document.getElementById('target-chem-num').innerText = chemTarget;
 
-            // 数学は〇・△・×のいずれかがついている数を集計
             let mathDoneCount = 0;
             Object.values(itemProgress).forEach(status => {
                 if(status === 'ok' || status === 'delta' || status === 'cross') mathDoneCount++;
@@ -384,7 +387,6 @@
             document.getElementById('actual-chem-num').innerText = todayActual.chem;
             document.getElementById('actual-vocab-num').innerText = todayActual.vocab;
 
-            // 達成率計算 (例: 消化数 / 目標数の平均)
             const mathRate = Math.min(100, (mathDoneCount / mathTarget) * 100);
             const phyRate = Math.min(100, (todayActual.phy / phyTarget) * 100);
             const chemRate = Math.min(100, (todayActual.chem / chemTarget) * 100);
@@ -392,26 +394,40 @@
 
             document.getElementById('today-rate-text').innerText = `${totalRate}%`;
 
-            // メダル判定 (100%金🥇, 80%銀🥈, 50%銅🥉, 50%未満青🟦)
             let medal = '🟦';
             if(totalRate >= 100) medal = '🥇';
             else if(totalRate >= 80) medal = '🥈';
             else if(totalRate >= 50) medal = '🥉';
 
             document.getElementById('today-medal-icon').innerText = medal;
+            renderWeeklyMedals();
         }
 
         function adjustScience(sub, amt) {
             todayActual[sub] = Math.max(0, todayActual[sub] + amt);
+            localStorage.setItem('study_today_actual', JSON.stringify(todayActual));
             updateTodayStats();
         }
 
         function adjustVocab(amt) {
             todayActual.vocab = Math.max(0, todayActual.vocab + amt);
+            localStorage.setItem('study_today_actual', JSON.stringify(todayActual));
             updateTodayStats();
         }
 
-        // --- 数学チャート描画 (難易度①〜⑤付き) ---
+        function renderWeeklyMedals() {
+            const container = document.getElementById('weekly-medals');
+            container.innerHTML = "";
+            const today = new Date();
+            for(let i=6; i>=0; i--) {
+                const d = new Date();
+                d.setDate(today.getDate() - i);
+                const dateStr = d.toISOString().split('T')[0];
+                const m = calendarRecords[dateStr] || '⭕';
+                container.innerHTML += `<span>${m}</span>`;
+            }
+        }
+
         function renderMathUnits() {
             const container = document.getElementById('math-units-container');
             container.innerHTML = "";
@@ -419,32 +435,33 @@
                 let buttonsHtml = "";
                 for(let i = 0; i < u.count; i++) {
                     const probNum = u.start + i;
-                    const diff = u.diffs[i] || 3;
+                    const diffNum = u.diffs[i] || 3;
+                    const diffStr = circNums[diffNum] || "③";
                     const key = `${u.id}_${probNum}`;
                     const status = itemProgress[key] || 'none';
 
                     let btnStyle = "bg-slate-100 text-slate-700 border-slate-200";
-                    let label = `${probNum}(★${diff})`;
+                    let label = `${probNum}${diffStr}`;
                     if(status === 'ok') { btnStyle = "bg-emerald-500 text-white border-emerald-600 font-black"; label = `${probNum}〇`; }
                     if(status === 'delta') { btnStyle = "bg-amber-400 text-slate-900 border-amber-500 font-black"; label = `${probNum}△`; }
                     if(status === 'cross') { btnStyle = "bg-rose-500 text-white border-rose-600 font-black"; label = `${probNum}×`; }
 
                     buttonsHtml += `
-                        <button onclick="cycleItemStatus('${key}')" class="h-11 rounded-xl border text-xs flex flex-col items-center justify-center transition-all ${btnStyle}">
+                        <button onclick="cycleItemStatus('${key}')" class="h-9 rounded-lg border text-[11px] flex flex-col items-center justify-center transition-all ${btnStyle}">
                             <span class="font-extrabold">${label}</span>
                         </button>
                     `;
                 }
                 container.innerHTML += `
-                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3">
+                    <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200/80 space-y-2">
                         <div class="flex justify-between items-center">
-                            <div class="font-extrabold text-slate-800 text-sm">
-                                <span class="bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded-md text-xs mr-2 font-bold">${u.category}</span>
+                            <div class="font-extrabold text-slate-800 text-xs">
+                                <span class="bg-indigo-100 text-indigo-800 px-1.5 py-0.5 rounded text-[10px] mr-1.5 font-bold">${u.category}</span>
                                 ${u.name}
                             </div>
-                            <div class="text-xs text-slate-500 font-bold">全 ${u.count} 題</div>
+                            <div class="text-[10px] text-slate-400 font-bold">全 ${u.count} 題</div>
                         </div>
-                        <div class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2">
+                        <div class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-1.5">
                             ${buttonsHtml}
                         </div>
                     </div>
@@ -470,29 +487,29 @@
             updateProgressChart();
         }
 
-        // --- カレンダーに記録 ---
         function saveTodayRecord() {
             const todayStr = new Date().toISOString().split('T')[0];
             const medal = document.getElementById('today-medal-icon').innerText;
             calendarRecords[todayStr] = medal;
             localStorage.setItem('study_calendar', JSON.stringify(calendarRecords));
-            confetti({ particleCount: 50, spread: 70, origin: { y: 0.7 } });
-            alert("本日の実績をカレンダーに記録しました！🎉");
+            confetti({ particleCount: 40, spread: 60, origin: { y: 0.7 } });
+            alert("本日の実績・メダルを上書き保存しました！🎉");
             renderCalendar();
+            renderWeeklyMedals();
         }
 
         function renderCalendar() {
             const grid = document.getElementById('calendar-grid');
             grid.innerHTML = "";
             ['日', '月', '火', '水', '木', '金', '土'].forEach(d => {
-                grid.innerHTML += `<div class="text-center font-extrabold text-xs text-indigo-900 py-1">${d}</div>`;
+                grid.innerHTML += `<div class="text-center font-bold text-[10px] text-indigo-900 py-0.5">${d}</div>`;
             });
 
-            const start = new Date(2026, 10, 9); // 11月9日運用開始
+            const start = new Date(2026, 10, 9);
             const end = new Date(2027, 2, 31);
             let cur = new Date(start);
 
-            for(let i=0; i<1; i++) grid.innerHTML += `<div></div>`; // 調整用
+            for(let i=0; i<1; i++) grid.innerHTML += `<div></div>`;
 
             while(cur <= end) {
                 const yyyy = cur.getFullYear();
@@ -502,9 +519,9 @@
                 const medal = calendarRecords[dateStr];
 
                 grid.innerHTML += `
-                    <div class="h-14 rounded-xl border flex flex-col items-center justify-center p-1 ${medal ? 'bg-indigo-50 border-indigo-200' : 'bg-slate-50 border-slate-200'}">
-                        <span class="text-[10px] font-bold text-slate-600">${cur.getMonth()+1}/${cur.getDate()}</span>
-                        <span class="text-base">${medal || '⭕'}</span>
+                    <div class="h-12 rounded-lg border flex flex-col items-center justify-center p-0.5 ${medal ? 'bg-indigo-50/70 border-indigo-200' : 'bg-slate-50 border-slate-200'}">
+                        <span class="text-[9px] font-bold text-slate-500">${cur.getMonth()+1}/${cur.getDate()}</span>
+                        <span class="text-xs">${medal || '⭕'}</span>
                     </div>
                 `;
                 cur.setDate(cur.getDate() + 1);
@@ -538,12 +555,11 @@
                 const t = customTargets[key];
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-50">
-                        <td class="py-3 px-2 font-bold text-indigo-900">${t.name}</td>
-                        <td class="py-3 px-2 text-slate-600">${t.time}</td>
-                        <td class="py-3 px-2 font-bold text-indigo-600">映有:${t.mathVideo} / 映無:${t.mathNoVideo}問</td>
-                        <td class="py-3 px-2 text-slate-700">映有:${t.phyVideo} / 映無:${t.phyNoVideo}問</td>
-                        <td class="py-3 px-2 text-slate-700">映有:${t.chemVideo} / 映無:${t.chemNoVideo}問</td>
-                        <td class="py-3 px-2 text-xs text-purple-700 font-bold">英古 ${t.vocab}語</td>
+                        <td class="py-2 px-1 font-bold text-indigo-950">${t.name}</td>
+                        <td class="py-2 px-1 font-bold text-indigo-600">${t.mathVideo}/${t.mathNoVideo}問</td>
+                        <td class="py-2 px-1 text-slate-600">${t.phyVideo}/${t.phyNoVideo}問</td>
+                        <td class="py-2 px-1 text-slate-600">${t.chemVideo}/${t.chemNoVideo}問</td>
+                        <td class="py-2 px-1 text-[10px] text-purple-700 font-bold">${t.vocab}語</td>
                     </tr>
                 `;
             });
@@ -555,24 +571,24 @@
             Object.keys(customTargets).forEach(key => {
                 const t = customTargets[key];
                 container.innerHTML += `
-                    <div class="bg-indigo-50/40 p-4 rounded-2xl border border-indigo-100 space-y-3">
-                        <div class="font-extrabold text-indigo-900 text-sm">${t.name}</div>
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <div class="bg-indigo-50/40 p-3 rounded-xl border border-indigo-100 space-y-2">
+                        <div class="font-extrabold text-indigo-900 text-xs">${t.name}</div>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
                             <div>
-                                <label class="text-xs font-bold text-slate-600 block mb-1">数学(映像有)</label>
-                                <input type="number" id="${key}-mathVideo" value="${t.mathVideo}" class="w-full bg-white border border-slate-200 rounded-xl p-2 font-bold text-center text-sm">
+                                <label class="text-[10px] font-bold text-slate-500 block">数学(映像有)</label>
+                                <input type="number" id="${key}-mathVideo" value="${t.mathVideo}" class="w-full bg-white border border-slate-200 rounded-lg p-1 font-bold text-center text-xs">
                             </div>
                             <div>
-                                <label class="text-xs font-bold text-slate-600 block mb-1">数学(映像無)</label>
-                                <input type="number" id="${key}-mathNoVideo" value="${t.mathNoVideo}" class="w-full bg-white border border-slate-200 rounded-xl p-2 font-bold text-center text-sm">
+                                <label class="text-[10px] font-bold text-slate-500 block">数学(映像無)</label>
+                                <input type="number" id="${key}-mathNoVideo" value="${t.mathNoVideo}" class="w-full bg-white border border-slate-200 rounded-lg p-1 font-bold text-center text-xs">
                             </div>
                             <div>
-                                <label class="text-xs font-bold text-slate-600 block mb-1">物理(映像有)</label>
-                                <input type="number" id="${key}-phyVideo" value="${t.phyVideo}" class="w-full bg-white border border-slate-200 rounded-xl p-2 font-bold text-center text-sm">
+                                <label class="text-[10px] font-bold text-slate-500 block">物理(映像有)</label>
+                                <input type="number" id="${key}-phyVideo" value="${t.phyVideo}" class="w-full bg-white border border-slate-200 rounded-lg p-1 font-bold text-center text-xs">
                             </div>
                             <div>
-                                <label class="text-xs font-bold text-slate-600 block mb-1">物理(映像無)</label>
-                                <input type="number" id="${key}-phyNoVideo" value="${t.phyNoVideo}" class="w-full bg-white border border-slate-200 rounded-xl p-2 font-bold text-center text-sm">
+                                <label class="text-[10px] font-bold text-slate-500 block">物理(映像無)</label>
+                                <input type="number" id="${key}-phyNoVideo" value="${t.phyNoVideo}" class="w-full bg-white border border-slate-200 rounded-lg p-1 font-bold text-center text-xs">
                             </div>
                         </div>
                     </div>
