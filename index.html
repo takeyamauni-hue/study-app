@@ -3,477 +3,485 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>高2スタディ・クエスト！</title>
+    <title>最強！高校2年スタディ・コンプリートアプリ</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Google Fonts: M PLUS Rounded 1c -->
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;700;800&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1p:wght@400;700;900&display=swap');
-        body { font-family: 'M PLUS Rounded 1p', sans-serif; }
+        body { font-family: 'M PLUS Rounded 1c', sans-serif; }
     </style>
 </head>
-<body class="bg-slate-100 text-slate-800 min-h-screen pb-12 selection:bg-pink-500 selection:text-white">
+<body class="bg-indigo-50 text-slate-800 min-h-screen pb-16">
 
-    <div id="app" class="max-w-md mx-auto p-4 space-y-5">
-        <!-- ヘッダー -->
-        <header class="bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 rounded-3xl p-5 shadow-md text-white text-center relative overflow-hidden">
-            <h1 class="text-2xl font-black tracking-wider flex items-center justify-center gap-2 drop-shadow-sm">
-                <i class="fa-solid fa-graduation-cap text-yellow-300"></i> スタディ・クエスト
+    <!-- ヘッダー -->
+    <header class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
+            <h1 class="text-xl md:text-2xl font-extrabold flex items-center gap-2">
+                🚀 <span>高2・3月末コンプリート作戦</span>
             </h1>
-            <p class="text-xs text-blue-100 mt-1 font-bold">高2ラストスパート！3月末コンプリート計画</p>
-            
-            <div id="countdown-badge" class="mt-3 inline-block bg-white/20 backdrop-blur-md px-4 py-1 rounded-full text-xs font-bold text-yellow-300 border border-white/30">
-                3月末まで あと -- 日
+            <div id="countdown-badge" class="bg-white/25 px-3 py-1 rounded-full text-sm font-bold backdrop-blur-sm">
+                3月末まで 121日
             </div>
-        </header>
+        </div>
+    </header>
 
-        <!-- 本日のメダル＆モードカード -->
-        <section class="bg-white rounded-3xl p-5 shadow-sm border border-slate-200 space-y-4">
-            <div class="flex justify-between items-center">
-                <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100">
-                    <i class="fa-solid fa-calendar-day mr-1"></i> 本日のモード
-                </span>
-                <select id="mode-selector" onchange="changeMode(this.value)" class="bg-slate-50 text-xs font-bold text-indigo-600 border border-slate-300 rounded-xl px-3 py-1.5 focus:outline-none cursor-pointer">
-                    <option value="auto">🤖 自動判定モード</option>
-                    <option value="school_club">🔥 平日部活（3h）</option>
-                    <option value="school_noclub">⚡ 平日部活なし（5h）</option>
-                    <option value="holiday_club">🎾 休日部活あり（5h）</option>
-                    <option value="holiday_noclub">🌟 休日部活なし（7h）</option>
-                    <option value="holiday_play">🎮 休日遊び（5h）</option>
-                </select>
-            </div>
+    <!-- メインコンテンツ -->
+    <main class="max-w-4xl mx-auto px-4 py-6">
 
-            <!-- メダルステータス表示 -->
-            <div id="today-medal-status" class="bg-gradient-to-r from-slate-50 to-indigo-50/50 p-4 rounded-2xl border border-indigo-100 flex items-center gap-4">
-                <div id="medal-icon" class="text-4xl drop-shadow-sm">🔷</div>
-                <div>
-                    <div id="medal-title" class="text-xs font-bold text-slate-500">本日の達成度メダル</div>
-                    <div id="medal-message" class="text-sm font-black text-slate-800 mt-0.5">青メダル（50%未満）</div>
-                    <div id="medal-progress-text" class="text-xs font-bold text-indigo-600 mt-1">今日のノルマ達成率: 0%</div>
+        <!-- タブナビゲーション -->
+        <div class="flex bg-white p-1.5 rounded-2xl shadow-md mb-6 gap-1 overflow-x-auto">
+            <button onclick="switchTab('task')" id="tab-btn-task" class="flex-1 py-2.5 px-3 rounded-xl font-bold text-sm transition-all bg-indigo-600 text-white shadow-sm whitespace-nowrap">
+                📅 今日のタスク
+            </button>
+            <button onclick="switchTab('math')" id="tab-btn-math" class="flex-1 py-2.5 px-3 rounded-xl font-bold text-sm transition-all text-slate-600 hover:bg-slate-100 whitespace-nowrap">
+                📐 数学チャート
+            </button>
+            <button onclick="switchTab('settings')" id="tab-btn-settings" class="flex-1 py-2.5 px-3 rounded-xl font-bold text-sm transition-all text-slate-600 hover:bg-slate-100 whitespace-nowrap">
+                📋 設定一覧
+            </button>
+            <button onclick="switchTab('custom')" id="tab-btn-custom" class="flex-1 py-2.5 px-3 rounded-xl font-bold text-sm transition-all text-slate-600 hover:bg-slate-100 whitespace-nowrap">
+                ⚙️ 目標変更
+            </button>
+            <button onclick="switchTab('progress')" id="tab-btn-progress" class="flex-1 py-2.5 px-3 rounded-xl font-bold text-sm transition-all text-slate-600 hover:bg-slate-100 whitespace-nowrap">
+                📊 全体進捗
+            </button>
+        </div>
+
+        <!-- 1. 今日のタスクタブ -->
+        <div id="tab-task" class="space-y-6">
+            <!-- モード選択 ＆ 映像授業切替カード -->
+            <div class="bg-white rounded-3xl p-6 shadow-md border-2 border-indigo-100">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4">
+                    <div>
+                        <h2 class="text-lg font-extrabold text-indigo-900 flex items-center gap-2">
+                            🎮 本日の学習モード設定
+                        </h2>
+                        <p class="text-xs text-slate-500">今日のスケジュールに合わせて選ぼう！</p>
+                    </div>
+                    <!-- 映像授業トグル -->
+                    <div class="flex items-center bg-indigo-50 p-1.5 rounded-2xl border border-indigo-200">
+                        <span class="text-xs font-bold text-indigo-800 px-2">🎬 映像授業:</span>
+                        <button onclick="toggleVideo(true)" id="video-btn-yes" class="px-3 py-1 text-xs font-bold rounded-xl transition-all bg-indigo-600 text-white shadow">あり (1.5h)</button>
+                        <button onclick="toggleVideo(false)" id="video-btn-no" class="px-3 py-1 text-xs font-bold rounded-xl transition-all text-slate-600">なし (自習増量)</button>
+                    </div>
+                </div>
+
+                <!-- モードボタン群 -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-2.5">
+                    <button onclick="setMode('weekday_club')" id="btn-weekday_club" class="p-3 rounded-2xl border-2 text-left transition-all bg-indigo-50 border-indigo-300">
+                        <div class="text-xs font-bold text-indigo-600">平日 (3h)</div>
+                        <div class="text-sm font-extrabold text-slate-800">部活あり</div>
+                    </button>
+                    <button onclick="setMode('weekday_noclub')" id="btn-weekday_noclub" class="p-3 rounded-2xl border-2 text-left transition-all bg-white border-slate-200">
+                        <div class="text-xs font-bold text-slate-500">火曜 (5h)</div>
+                        <div class="text-sm font-extrabold text-slate-800">部活なし</div>
+                    </button>
+                    <button onclick="setMode('holiday_club')" id="btn-holiday_club" class="p-3 rounded-2xl border-2 text-left transition-all bg-white border-slate-200">
+                        <div class="text-xs font-bold text-slate-500">土曜・長期休 (5h)</div>
+                        <div class="text-sm font-extrabold text-slate-800">部活あり</div>
+                    </button>
+                    <button onclick="setMode('holiday_noclub')" id="btn-holiday_noclub" class="p-3 rounded-2xl border-2 text-left transition-all bg-white border-slate-200">
+                        <div class="text-xs font-bold text-slate-500">日祝 (7h)</div>
+                        <div class="text-sm font-extrabold text-slate-800">部活なし</div>
+                    </button>
                 </div>
             </div>
 
-            <div id="today-mode-banner" class="text-xs font-bold text-indigo-700 bg-indigo-50 p-2.5 rounded-xl border border-indigo-100 text-center">
-                判定中...
-            </div>
-        </section>
+            <!-- 本日のタスクリスト -->
+            <div class="bg-white rounded-3xl p-6 shadow-md border-2 border-indigo-100">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-lg font-extrabold text-indigo-900 flex items-center gap-2">
+                        ✨ 本日のノルマと達成度
+                    </h2>
+                    <span id="today-mode-label" class="bg-indigo-100 text-indigo-800 text-xs font-bold px-3 py-1 rounded-full">
+                        平日部活あり (映像授業あり)
+                    </span>
+                </div>
 
-        <!-- 達成度カレンダー（7日間） -->
-        <section class="bg-white rounded-3xl p-5 shadow-sm border border-slate-200 space-y-3">
-            <div class="flex justify-between items-center">
-                <span class="text-sm font-black text-slate-700"><i class="fa-solid fa-calendar-days text-indigo-500 mr-1"></i> 直近7日間のメダル記録</span>
+                <div id="tasks-container" class="space-y-4">
+                    <!-- 動的生成 -->
+                </div>
             </div>
-            <div id="calendar-container" class="grid grid-cols-7 gap-1.5 text-center">
-                <!-- 動的生成 -->
-            </div>
-            <div class="flex justify-around items-center pt-2 border-t border-slate-100 text-[11px] font-bold text-slate-500">
-                <span>🥇 金 100%</span>
-                <span>🥈 銀 70%+</span>
-                <span>🥉 銅 50%+</span>
-                <span>🔷 青 50%未満</span>
-            </div>
-        </section>
-
-        <!-- 科目タブ切り替え -->
-        <div class="flex gap-1.5 overflow-x-auto pb-1">
-            <button onclick="switchTab('math1a')" id="tab-math1a" class="flex-1 py-2.5 px-3 rounded-2xl font-bold text-xs bg-indigo-600 text-white shadow-md transition whitespace-nowrap">数Ⅰ+A</button>
-            <button onclick="switchTab('math2bc')" id="tab-math2bc" class="flex-1 py-2.5 px-3 rounded-2xl font-bold text-xs bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition whitespace-nowrap">数Ⅱ·B·C</button>
-            <button onclick="switchTab('physics')" id="tab-physics" class="flex-1 py-2.5 px-3 rounded-2xl font-bold text-xs bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition whitespace-nowrap">物理</button>
-            <button onclick="switchTab('chemistry')" id="tab-chemistry" class="flex-1 py-2.5 px-3 rounded-2xl font-bold text-xs bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition whitespace-nowrap">化学</button>
-            <button onclick="switchTab('words')" id="tab-words" class="flex-1 py-2.5 px-3 rounded-2xl font-bold text-xs bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition whitespace-nowrap">単語</button>
         </div>
 
-        <!-- メインコンテンツ領域 -->
-        <main id="main-content" class="space-y-4">
-            <!-- JavaScriptで動的描画 -->
-        </main>
-    </div>
+        <!-- 2. 数学チャートタブ -->
+        <div id="tab-math" class="hidden space-y-6">
+            <div class="bg-white rounded-3xl p-6 shadow-md border-2 border-indigo-100">
+                <h2 class="text-lg font-extrabold text-indigo-900 mb-2">📐 青チャート（数学ⅠA・ⅡBC）進捗</h2>
+                <p class="text-xs text-slate-500 mb-6">全795題の1周コンプリートに向けて、単元ごとにステータスを更新しよう！</p>
+                
+                <div id="math-units-container" class="space-y-6">
+                    <!-- 動的生成 -->
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. 設定一覧タブ -->
+        <div id="tab-settings" class="hidden space-y-6">
+            <div class="bg-white rounded-3xl p-6 shadow-md border-2 border-indigo-100">
+                <h2 class="text-lg font-extrabold text-indigo-900 mb-4">📋 モード別・目標問題数一覧</h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm">
+                        <thead>
+                            <tr class="border-b-2 border-indigo-100 text-indigo-900">
+                                <th class="py-3 px-2">モード</th>
+                                <th class="py-3 px-2">自習時間</th>
+                                <th class="py-3 px-2">数学</th>
+                                <th class="py-3 px-2">物理</th>
+                                <th class="py-3 px-2">化学</th>
+                                <th class="py-3 px-2">暗記科目</th>
+                            </tr>
+                        </thead>
+                        <tbody id="settings-table-body" class="divide-y divide-slate-100">
+                            <!-- 動的生成 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. 目標カスタマイズタブ -->
+        <div id="tab-custom" class="hidden space-y-6">
+            <div class="bg-white rounded-3xl p-6 shadow-md border-2 border-indigo-100">
+                <h2 class="text-lg font-extrabold text-indigo-900 mb-2">⚙️ 1日の目標問題数をカスタム</h2>
+                <p class="text-xs text-slate-500 mb-6">「もう少し解ける！」と感じたら、ここから自由に数値を変更できます。</p>
+
+                <div id="custom-form-container" class="space-y-6">
+                    <!-- 動的生成 -->
+                </div>
+                <button onclick="saveCustomSettings()" class="w-full mt-6 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-extrabold py-3.5 rounded-2xl shadow-lg hover:opacity-95 transition-all">
+                    💾 設定を保存する
+                </button>
+            </div>
+        </div>
+
+        <!-- 5. 全体進捗タブ -->
+        <div id="tab-progress" class="hidden space-y-6">
+            <div class="bg-white rounded-3xl p-6 shadow-md border-2 border-indigo-100 flex flex-col items-center">
+                <h2 class="text-lg font-extrabold text-indigo-900 mb-2 w-full text-left">📊 3月末コンプリート進捗</h2>
+                <p class="text-xs text-slate-500 mb-6 w-full text-left">全795題に対する数学の達成度割合です。</p>
+
+                <div class="w-64 h-64 relative mb-6">
+                    <canvas id="progressChart"></canvas>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 w-full">
+                    <div class="bg-emerald-50 border-2 border-emerald-200 p-4 rounded-2xl text-center">
+                        <div class="text-xs font-bold text-emerald-700">完了 (〇)</div>
+                        <div id="stat-ok" class="text-2xl font-extrabold text-emerald-800">0題</div>
+                    </div>
+                    <div class="bg-amber-50 border-2 border-amber-200 p-4 rounded-2xl text-center">
+                        <div class="text-xs font-bold text-amber-700">要復習 (△)</div>
+                        <div id="stat-delta" class="text-2xl font-extrabold text-amber-800">0題</div>
+                    </div>
+                    <div class="bg-rose-50 border-2 border-rose-200 p-4 rounded-2xl text-center">
+                        <div class="text-xs font-bold text-rose-700">苦手 (×)</div>
+                        <div id="stat-cross" class="text-2xl font-extrabold text-rose-800">0題</div>
+                    </div>
+                    <div class="bg-slate-50 border-2 border-slate-200 p-4 rounded-2xl text-center">
+                        <div class="text-xs font-bold text-slate-600">未着手</div>
+                        <div id="stat-none" class="text-2xl font-extrabold text-slate-700">795題</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
 
     <script>
-        // 写真から抽出した青チャート等の実際の例題番号と難易度データ
-        const defaultData = {
-            manualMode: 'auto',
-            words: { englishTotal: 0, classicalTotal: 0 },
-            dailyLog: {}, // "YYYY-MM-DD": { done: count, total: target }
-            subjects: {
-                math1a: {
-                    name: "青チャート：数学Ⅰ+A",
-                    categories: [
-                        { id: "m1a_1", title: "数と式（1〜34）", problems: [
-                            { num: 1, diff: 1 }, { num: 2, diff: 2 }, { num: 3, diff: 2 }, { num: 4, diff: 2 }, { num: 5, diff: 2 },
-                            { num: 6, diff: 4 }, { num: 7, diff: 2 }, { num: 8, diff: 2 }, { num: 9, diff: 2 }, { num: 10, diff: 3 },
-                            { num: 11, diff: 1 }, { num: 12, diff: 3 }, { num: 13, diff: 3 }, { num: 14, diff: 3 }, { num: 15, diff: 2 },
-                            { num: 16, diff: 2 }, { num: 17, diff: 3 }, { num: 18, diff: 3 }, { num: 19, diff: 3 }, { num: 20, diff: 4 },
-                            { num: 21, diff: 3 }, { num: 22, diff: 2 }, { num: 23, diff: 2 }, { num: 24, diff: 2 }, { num: 25, diff: 2 },
-                            { num: 26, diff: 4 }, { num: 27, diff: 1 }, { num: 28, diff: 2 }, { num: 29, diff: 2 }, { num: 30, diff: 3 },
-                            { num: 31, diff: 3 }, { num: 32, diff: 3 }, { num: 33, diff: 3 }, { num: 34, diff: 3 }
-                        ]}
-                    ],
-                    status: {} // "catId_num": { st: 0~3, date: "12/5" } 0:未, 1:〇, 2:△, 3:×
-                },
-                math2bc: {
-                    name: "青チャート：数学Ⅱ·B·C",
-                    categories: [
-                        { id: "m2bc_1", title: "複素数と2次方程式（35〜70）", problems: [
-                            { num: 35, diff: 1 }, { num: 36, diff: 2 }, { num: 37, diff: 3 }, { num: 38, diff: 3 }, { num: 39, diff: 1 },
-                            { num: 40, diff: 2 }, { num: 41, diff: 3 }, { num: 42, diff: 4 }, { num: 43, diff: 2 }, { num: 44, diff: 3 },
-                            { num: 45, diff: 2 }, { num: 46, diff: 2 }, { num: 47, diff: 4 }, { num: 48, diff: 3 }, { num: 49, diff: 1 },
-                            { num: 50, diff: 2 }, { num: 51, diff: 2 }, { num: 52, diff: 3 }, { num: 53, diff: 4 }, { num: 54, diff: 2 },
-                            { num: 55, diff: 2 }, { num: 56, diff: 3 }, { num: 57, diff: 5 }, { num: 58, diff: 2 }, { num: 59, diff: 3 },
-                            { num: 60, diff: 2 }, { num: 61, diff: 2 }, { num: 62, diff: 3 }, { num: 63, diff: 2 }, { num: 64, diff: 3 },
-                            { num: 65, diff: 2 }, { num: 66, diff: 2 }, { num: 67, diff: 3 }, { num: 68, diff: 3 }, { num: 69, diff: 3 }, { num: 70, diff: 4 }
-                        ]},
-                        { id: "m2bc_2", title: "図形と方程式（71〜131）", problems: [
-                            { num: 71, diff: 1 }, { num: 72, diff: 2 }, { num: 73, diff: 2 }, { num: 74, diff: 2 }, { num: 75, diff: 2 },
-                            { num: 76, diff: 3 }, { num: 77, diff: 2 }, { num: 78, diff: 1 }, { num: 79, diff: 2 }, { num: 80, diff: 2 },
-                            { num: 81, diff: 3 }, { num: 82, diff: 3 }, { num: 83, diff: 3 }, { num: 84, diff: 2 }, { num: 85, diff: 3 },
-                            { num: 86, diff: 3 }, { num: 87, diff: 2 }, { num: 88, diff: 2 }, { num: 89, diff: 3 }, { num: 90, diff: 2 },
-                            { num: 91, diff: 2 }, { num: 92, diff: 3 }, { num: 93, diff: 1 }, { num: 94, diff: 2 }, { num: 95, diff: 2 },
-                            { num: 96, diff: 2 }, { num: 97, diff: 2 }, { num: 98, diff: 2 }, { num: 99, diff: 2 }, { num: 100, diff: 2 },
-                            { num: 101, diff: 2 }, { num: 102, diff: 2 }, { num: 103, diff: 3 }, { num: 104, diff: 4 }, { num: 105, diff: 2 },
-                            { num: 106, diff: 2 }, { num: 107, diff: 2 }, { num: 108, diff: 3 }, { num: 109, diff: 2 }, { num: 110, diff: 2 },
-                            { num: 111, diff: 3 }, { num: 112, diff: 3 }, { num: 113, diff: 3 }, { num: 114, diff: 4 }, { num: 115, diff: 4 },
-                            { num: 116, diff: 4 }, { num: 117, diff: 1 }, { num: 118, diff: 2 }, { num: 119, diff: 3 }, { num: 120, diff: 2 },
-                            { num: 121, diff: 3 }, { num: 122, diff: 2 }, { num: 123, diff: 3 }, { num: 124, diff: 3 }, { num: 125, diff: 4 },
-                            { num: 126, diff: 4 }, { num: 127, diff: 4 }, { num: 128, diff: 5 }, { num: 129, diff: 3 }, { num: 130, diff: 4 }, { num: 131, diff: 2 }
-                        ]},
-                        { id: "m2bc_3", title: "三角関数（132〜168）", problems: [
-                            { num: 132, diff: 1 }, { num: 133, diff: 1 }, { num: 134, diff: 1 }, { num: 135, diff: 2 }, { num: 136, diff: 2 },
-                            { num: 137, diff: 2 }, { num: 138, diff: 3 }, { num: 139, diff: 1 }, { num: 140, diff: 1 }, { num: 141, diff: 2 },
-                            { num: 142, diff: 2 }, { num: 143, diff: 2 }, { num: 144, diff: 2 }, { num: 145, diff: 3 }, { num: 146, diff: 2 },
-                            { num: 147, diff: 3 }, { num: 148, diff: 4 }, { num: 149, diff: 4 }, { num: 150, diff: 1 }, { num: 151, diff: 2 },
-                            { num: 152, diff: 2 }, { num: 153, diff: 3 }, { num: 154, diff: 3 }, { num: 155, diff: 2 }, { num: 156, diff: 3 },
-                            { num: 157, diff: 4 }, { num: 158, diff: 3 }, { num: 159, diff: 3 }, { num: 160, diff: 1 }, { num: 161, diff: 2 },
-                            { num: 162, diff: 2 }, { num: 163, diff: 3 }, { num: 164, diff: 3 }, { num: 165, diff: 4 }, { num: 166, diff: 4 },
-                            { num: 167, diff: 4 }, { num: 168, diff: 4 }
-                        ]},
-                        { id: "m2bc_4", title: "指数・対数関数（169〜194）", problems: [
-                            { num: 169, diff: 2 }, { num: 170, diff: 3 }, { num: 171, diff: 2 }, { num: 172, diff: 2 }, { num: 173, diff: 2 },
-                            { num: 174, diff: 2 }, { num: 175, diff: 3 }, { num: 176, diff: 1 }, { num: 177, diff: 2 }, { num: 178, diff: 3 },
-                            { num: 179, diff: 3 }, { num: 180, diff: 2 }, { num: 181, diff: 2 }, { num: 182, diff: 2 }, { num: 183, diff: 2 },
-                            { num: 184, diff: 2 }, { num: 185, diff: 4 }, { num: 186, diff: 2 }, { num: 187, diff: 3 }, { num: 188, diff: 2 },
-                            { num: 189, diff: 2 }, { num: 190, diff: 2 }, { num: 191, diff: 3 }, { num: 192, diff: 4 }, { num: 193, diff: 4 }, { num: 194, diff: 4 }
-                        ]},
-                        { id: "m2bc_5", title: "微分法（195〜234）", problems: [
-                            { num: 195, diff: 1 }, { num: 196, diff: 3 }, { num: 197, diff: 3 }, { num: 198, diff: 2 }, { num: 199, diff: 2 },
-                            { num: 200, diff: 2 }, { num: 201, diff: 3 }, { num: 202, diff: 2 }, { num: 203, diff: 4 }, { num: 204, diff: 2 },
-                            { num: 205, diff: 2 }, { num: 206, diff: 3 }, { num: 207, diff: 3 }, { num: 208, diff: 3 }, { num: 209, diff: 2 },
-                            { num: 210, diff: 2 }, { num: 211, diff: 2 }, { num: 212, diff: 3 }, { num: 213, diff: 2 }, { num: 214, diff: 3 },
-                            { num: 215, diff: 3 }, { num: 216, diff: 3 }, { num: 217, diff: 3 }, { num: 218, diff: 4 }, { num: 219, diff: 2 },
-                            { num: 220, diff: 3 }, { num: 221, diff: 2 }, { num: 222, diff: 3 }, { num: 223, diff: 3 }, { num: 224, diff: 5 },
-                            { num: 225, diff: 3 }, { num: 226, diff: 3 }, { num: 227, diff: 2 }, { num: 228, diff: 3 }, { num: 229, diff: 2 },
-                            { num: 230, diff: 4 }, { num: 231, diff: 4 }, { num: 232, diff: 4 }, { num: 233, diff: 5 }, { num: 234, diff: 4 }
-                        ]},
-                        { id: "m2bc_6", title: "積分法（235〜262）", problems: [
-                            { num: 235, diff: 2 }, { num: 236, diff: 3 }, { num: 237, diff: 2 }, { num: 238, diff: 1 }, { num: 239, diff: 3 },
-                            { num: 240, diff: 2 }, { num: 241, diff: 2 }, { num: 242, diff: 2 }, { num: 243, diff: 3 }, { num: 244, diff: 3 },
-                            { num: 245, diff: 2 }, { num: 246, diff: 2 }, { num: 247, diff: 3 }, { num: 248, diff: 3 }, { num: 249, diff: 3 },
-                            { num: 250, diff: 2 }, { num: 251, diff: 3 }, { num: 252, diff: 4 }, { num: 253, diff: 3 }, { num: 254, diff: 3 },
-                            { num: 255, diff: 3 }, { num: 256, diff: 3 }, { num: 257, diff: 4 }, { num: 258, diff: 2 }, { num: 259, diff: 4 },
-                            { num: 260, diff: 5 }, { num: 261, diff: 3 }, { num: 262, diff: 3 }
-                        ]},
-                        { id: "m2bc_7", title: "数列（1〜61）", problems: [
-                            { num: 1, diff: 1 }, { num: 2, diff: 2 }, { num: 3, diff: 2 }, { num: 4, diff: 2 }, { num: 5, diff: 2 },
-                            { num: 6, diff: 2 }, { num: 7, diff: 2 }, { num: 8, diff: 2 }, { num: 9, diff: 3 }, { num: 10, diff: 4 },
-                            { num: 11, diff: 3 }, { num: 12, diff: 1 }, { num: 13, diff: 2 }, { num: 14, diff: 3 }, { num: 15, diff: 2 },
-                            { num: 16, diff: 4 }, { num: 17, diff: 2 }, { num: 18, diff: 4 }, { num: 19, diff: 2 }, { num: 20, diff: 3 },
-                            { num: 21, diff: 2 }, { num: 22, diff: 2 }, { num: 23, diff: 3 }, { num: 24, diff: 2 }, { num: 25, diff: 3 },
-                            { num: 26, diff: 2 }, { num: 27, diff: 2 }, { num: 28, diff: 3 }, { num: 29, diff: 3 }, { num: 30, diff: 4 },
-                            { num: 31, diff: 4 }, { num: 32, diff: 4 }, { num: 33, diff: 4 }, { num: 34, diff: 3 }, { num: 35, diff: 3 },
-                            { num: 36, diff: 2 }, { num: 37, diff: 3 }, { num: 38, diff: 3 }, { num: 39, diff: 3 }, { num: 40, diff: 4 },
-                            { num: 41, diff: 3 }, { num: 42, diff: 3 }, { num: 43, diff: 4 }, { num: 44, diff: 3 }, { num: 45, diff: 3 },
-                            { num: 46, diff: 4 }, { num: 47, diff: 3 }, { num: 48, diff: 3 }, { num: 49, diff: 3 }, { num: 50, diff: 4 },
-                            { num: 51, diff: 3 }, { num: 52, diff: 5 }, { num: 53, diff: 4 }, { num: 54, diff: 1 }, { num: 55, diff: 2 },
-                            { num: 56, diff: 3 }, { num: 57, diff: 2 }, { num: 58, diff: 5 }, { num: 59, diff: 2 }, { num: 60, diff: 4 }, { num: 61, diff: 4 }
-                        ]},
-                        { id: "m2bc_8", title: "統計的な推測（62〜94）", problems: [
-                            { num: 62, diff: 2 }, { num: 63, diff: 2 }, { num: 64, diff: 1 }, { num: 65, diff: 2 }, { num: 66, diff: 4 },
-                            { num: 67, diff: 4 }, { num: 68, diff: 1 }, { num: 69, diff: 3 }, { num: 70, diff: 2 }, { num: 71, diff: 2 },
-                            { num: 72, diff: 1 }, { num: 73, diff: 1 }, { num: 74, diff: 3 }, { num: 75, diff: 3 }, { num: 76, diff: 2 },
-                            { num: 77, diff: 3 }, { num: 78, diff: 2 }, { num: 79, diff: 3 }, { num: 80, diff: 1 }, { num: 81, diff: 2 },
-                            { num: 82, diff: 2 }, { num: 83, diff: 1 }, { num: 84, diff: 2 }, { num: 85, diff: 3 }, { num: 86, diff: 2 },
-                            { num: 87, diff: 2 }, { num: 88, diff: 1 }, { num: 89, diff: 2 }, { num: 90, diff: 2 }, { num: 91, diff: 3 },
-                            { num: 92, diff: 2 }, { num: 93, diff: 2 }, { num: 94, diff: 2 }
-                        ]},
-                        { id: "m2bc_9", title: "ベクトル（1〜43）", problems: [
-                            { num: 1, diff: 1 }, { num: 2, diff: 1 }, { num: 3, diff: 2 }, { num: 4, diff: 2 }, { num: 5, diff: 2 },
-                            { num: 6, diff: 1 }, { num: 7, diff: 2 }, { num: 8, diff: 2 }, { num: 9, diff: 2 }, { num: 10, diff: 3 },
-                            { num: 11, diff: 1 }, { num: 12, diff: 2 }, { num: 13, diff: 2 }, { num: 14, diff: 2 }, { num: 15, diff: 3 },
-                            { num: 16, diff: 3 }, { num: 17, diff: 3 }, { num: 18, diff: 2 }, { num: 19, diff: 3 }, { num: 20, diff: 4 },
-                            { num: 21, diff: 4 }, { num: 22, diff: 1 }, { num: 23, diff: 3 }, { num: 24, diff: 2 }, { num: 25, diff: 2 },
-                            { num: 26, diff: 2 }, { num: 27, diff: 3 }, { num: 28, diff: 3 }, { num: 29, diff: 3 }, { num: 30, diff: 2 },
-                            { num: 31, diff: 3 }, { num: 32, diff: 3 }, { num: 33, diff: 3 }, { num: 34, diff: 2 }, { num: 35, diff: 2 },
-                            { num: 36, diff: 2 }, { num: 37, diff: 3 }, { num: 38, diff: 3 }, { num: 39, diff: 3 }, { num: 40, diff: 3 },
-                            { num: 41, diff: 3 }, { num: 42, diff: 2 }, { num: 43, diff: 4 }
-                        ]}
-                    ],
-                    status: {}
-                },
-                physics: {
-                    name: "リードα：物理",
-                    categories: [
-                        { id: "p_1", title: "力学・運動と法則", problems: Array.from({length: 35}, (_, i) => ({ num: i + 1, diff: (i % 3) + 1 })) },
-                        { id: "p_2", title: "波動・熱力学", problems: Array.from({length: 40}, (_, i) => ({ num: i + 1, diff: (i % 4) + 1 })) }
-                    ],
-                    status: {}
-                },
-                chemistry: {
-                    name: "リードα：化学",
-                    categories: [
-                        { id: "c_1", title: "物質の構成・化学結合", problems: Array.from({length: 40}, (_, i) => ({ num: i + 1, diff: (i % 3) + 1 })) },
-                        { id: "c_2", title: "物質の状態・溶液", problems: Array.from({length: 35}, (_, i) => ({ num: i + 1, diff: (i % 4) + 1 })) }
-                    ],
-                    status: {}
-                }
-            }
+        // --- データ定義 ---
+        const mathData = [
+            // 数学ⅠA (350題)
+            { id: "m1", name: "数と式", count: 43, category: "1A" },
+            { id: "m2", name: "集合と命題", count: 20, category: "1A" },
+            { id: "m3", name: "二次関数", count: 69, category: "1A" },
+            { id: "m4", name: "図形と計量", count: 42, category: "1A" },
+            { id: "m5", name: "データの分析", count: 20, category: "1A" },
+            { id: "m6", name: "場合の数", count: 34, category: "1A" },
+            { id: "m7", name: "確率", count: 35, category: "1A" },
+            { id: "m8", name: "図形の性質", count: 40, category: "1A" },
+            { id: "m9", name: "数学と人間の活動", count: 47, category: "1A" },
+            // 数学ⅡBC (445題)
+            { id: "m10", name: "多項式", count: 34, category: "2BC" },
+            { id: "m11", name: "複素数と方程式", count: 36, category: "2BC" },
+            { id: "m12", name: "図形と方程式", count: 61, category: "2BC" },
+            { id: "m13", name: "三角関数", count: 37, category: "2BC" },
+            { id: "m14", name: "指数・対数関数", count: 26, category: "2BC" },
+            { id: "m15", name: "微分法", count: 40, category: "2BC" },
+            { id: "m16", name: "積分法", count: 28, category: "2BC" },
+            { id: "m17", name: "数列", count: 61, category: "2BC" },
+            { id: "m18", name: "統計的な確率", count: 33, category: "2BC" },
+            { id: "m19", name: "ベクトル (平面)", count: 43, category: "2BC" },
+            { id: "m20", name: "空間ベクトル", count: 46, category: "2BC" }
+        ];
+
+        // 標準目標設定データ (デフォルト)
+        let defaultTargets = {
+            weekday_club: { name: "平日部活あり (3h)", time: "自習 1.5h", mathVideo: 5, mathNoVideo: 8, phyVideo: 3, phyNoVideo: 5, chemVideo: 3, chemNoVideo: 5, vocab: "英 50語 / 古 20語" },
+            weekday_noclub: { name: "平日部活なし (5h)", time: "自習 3.5h", mathVideo: 8, mathNoVideo: 12, phyVideo: 5, phyNoVideo: 7, chemVideo: 5, chemNoVideo: 7, vocab: "英 100語 / 古 30語" },
+            holiday_club: { name: "休日部活あり (5h)", time: "自習 3.5h", mathVideo: 8, mathNoVideo: 12, phyVideo: 5, phyNoVideo: 7, chemVideo: 5, chemNoVideo: 7, vocab: "英 100語 / 古 30語" },
+            holiday_noclub: { name: "休日部活なし (7h)", time: "自習 5.5h", mathVideo: 12, mathNoVideo: 16, phyVideo: 7, phyNoVideo: 10, chemVideo: 7, phyNoVideo: 10, chemNoVideo: 10, vocab: "英 100語 / 古 40語" }
         };
 
-        let appData = JSON.parse(localStorage.getItem('study_quest_data_v4')) || defaultData;
-        let currentTab = 'math2bc';
+        let currentMode = "weekday_club";
+        let hasVideo = true;
+        let userProgress = JSON.parse(localStorage.getItem('study_progress')) || {};
+        let customTargets = JSON.parse(localStorage.getItem('custom_targets')) || JSON.parse(JSON.stringify(defaultTargets));
+        let chartInstance = null;
 
-        function saveData() {
-            localStorage.setItem('study_quest_data_v4', JSON.stringify(appData));
-            render();
+        // --- 初期化 ---
+        window.onload = function() {
+            renderTasks();
+            renderMathUnits();
+            renderSettingsTable();
+            renderCustomForm();
+            updateProgressChart();
+        };
+
+        // --- タブ切り替え ---
+        function switchTab(tabId) {
+            ['task', 'math', 'settings', 'custom', 'progress'].forEach(t => {
+                document.getElementById(`tab-${t}`).classList.add('hidden');
+                document.getElementById(`tab-btn-${t}`).className = "flex-1 py-2.5 px-3 rounded-xl font-bold text-sm transition-all text-slate-600 hover:bg-slate-100 whitespace-nowrap";
+            });
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+            document.getElementById(`tab-btn-${tabId}`).className = "flex-1 py-2.5 px-3 rounded-xl font-bold text-sm transition-all bg-indigo-600 text-white shadow-sm whitespace-nowrap";
+            
+            if(tabId === 'progress') updateProgressChart();
         }
 
-        function getTodayStr() {
-            const d = new Date();
-            return `${d.getMonth() + 1}/${d.getDate()}`;
-        }
-
-        function getTodayYMD() {
-            const d = new Date();
-            return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-        }
-
-        function getTodayModeTarget() {
-            const map = {
-                school_club: 10,
-                school_noclub: 20,
-                holiday_club: 20,
-                holiday_noclub: 30,
-                holiday_play: 15
-            };
-            if (appData.manualMode && appData.manualMode !== 'auto') {
-                return map[appData.manualMode] || 15;
-            }
-            const day = new Date().getDay();
-            if (day === 2) return 20; // 火曜部活なし
-            if (day === 6) return 20; // 土曜
-            if (day === 0) return 30; // 日曜
-            return 10; // 平日部活
-        }
-
-        function changeMode(val) {
-            appData.manualMode = val;
-            saveData();
-        }
-
-        function switchTab(tab) {
-            currentTab = tab;
-            ['math1a', 'math2bc', 'physics', 'chemistry', 'words'].forEach(t => {
-                const btn = document.getElementById(`tab-${t}`);
-                if (t === tab) {
-                    btn.className = "flex-1 py-2.5 px-3 rounded-2xl font-bold text-xs bg-indigo-600 text-white shadow-md transition whitespace-nowrap";
+        // --- モード＆映像授業切替 ---
+        function setMode(mode) {
+            currentMode = mode;
+            ['weekday_club', 'weekday_noclub', 'holiday_club', 'holiday_noclub'].forEach(m => {
+                const btn = document.getElementById(`btn-${m}`);
+                if(m === mode) {
+                    btn.className = "p-3 rounded-2xl border-2 text-left transition-all bg-indigo-50 border-indigo-300 shadow-sm";
                 } else {
-                    btn.className = "flex-1 py-2.5 px-3 rounded-2xl font-bold text-xs bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition whitespace-nowrap";
+                    btn.className = "p-3 rounded-2xl border-2 text-left transition-all bg-white border-slate-200";
                 }
             });
-            render();
+            renderTasks();
         }
 
-        // ステータス切り替え: 0:未 -> 1:〇 -> 2:△ -> 3:× -> 0
-        function cycleStatus(subjectKey, catId, pNum) {
-            const key = `${catId}_${pNum}`;
-            let currentObj = appData.subjects[subjectKey].status[key] || { st: 0, date: "" };
-            let nextSt = (currentObj.st + 1) % 4;
-            let todayStr = getTodayStr();
-
-            appData.subjects[subjectKey].status[key] = {
-                st: nextSt,
-                date: nextSt > 0 ? todayStr : ""
-            };
-
-            saveData();
+        function toggleVideo(val) {
+            hasVideo = val;
+            document.getElementById('video-btn-yes').className = val ? "px-3 py-1 text-xs font-bold rounded-xl transition-all bg-indigo-600 text-white shadow" : "px-3 py-1 text-xs font-bold rounded-xl transition-all text-slate-600";
+            document.getElementById('video-btn-no').className = !val ? "px-3 py-1 text-xs font-bold rounded-xl transition-all bg-indigo-600 text-white shadow" : "px-3 py-1 text-xs font-bold rounded-xl transition-all text-slate-600";
+            renderTasks();
         }
 
-        function addWords(type, amount) {
-            if (type === 'eng') appData.words.englishTotal += amount;
-            if (type === 'clss') appData.words.classicalTotal += amount;
-            saveData();
+        // --- タスク描画 ---
+        function renderTasks() {
+            const target = customTargets[currentMode];
+            const mathCount = hasVideo ? target.mathVideo : target.mathNoVideo;
+            const phyCount = hasVideo ? target.phyVideo : target.phyNoVideo;
+            const chemCount = hasVideo ? target.chemVideo : target.chemNoVideo;
+
+            document.getElementById('today-mode-label').innerText = `${target.name} (映像授業: ${hasVideo ? 'あり' : 'なし'})`;
+
+            const container = document.getElementById('tasks-container');
+            container.innerHTML = `
+                <div class="flex items-center justify-between p-4 bg-indigo-50/50 rounded-2xl border border-indigo-100">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-bold text-lg">📐</div>
+                        <div>
+                            <div class="font-extrabold text-slate-800">数学 チャート演習</div>
+                            <div class="text-xs text-indigo-600 font-bold">目標: ${mathCount} 問</div>
+                        </div>
+                    </div>
+                    <span class="text-xs bg-indigo-100 text-indigo-700 font-extrabold px-3 py-1.5 rounded-xl">自習メイン</span>
+                </div>
+                <div class="flex items-center justify-between p-4 bg-emerald-50/50 rounded-2xl border border-emerald-100">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold text-lg">⚛️</div>
+                        <div>
+                            <div class="font-extrabold text-slate-800">物理 演習</div>
+                            <div class="text-xs text-emerald-600 font-bold">目標: ${phyCount} 問</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between p-4 bg-amber-50/50 rounded-2xl border border-amber-100">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-amber-600 text-white flex items-center justify-center font-bold text-lg">🧪</div>
+                        <div>
+                            <div class="font-extrabold text-slate-800">化学 演習</div>
+                            <div class="text-xs text-amber-600 font-bold">目標: ${chemCount} 問</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between p-4 bg-purple-50/50 rounded-2xl border border-purple-100">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-purple-600 text-white flex items-center justify-center font-bold text-lg">📖</div>
+                        <div>
+                            <div class="font-extrabold text-slate-800">暗記ルーティン</div>
+                            <div class="text-xs text-purple-600 font-bold">${target.vocab}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
         }
 
-        function getDiffCircle(diff) {
-            const circles = ["①", "②", "③", "④", "⑤"];
-            return circles[diff - 1] || "①";
-        }
+        // --- 数学チャート単元一覧描画 ---
+        function renderMathUnits() {
+            const container = document.getElementById('math-units-container');
+            container.innerHTML = "";
 
-        function render() {
-            // カウントダウン
-            const now = new Date();
-            const target = new Date(now.getFullYear() + (now.getMonth() > 2 ? 1 : 0), 2, 31);
-            const diffDays = Math.ceil((target - now) / (1000 * 60 * 60 * 24));
-            document.getElementById('countdown-badge').innerText = `3月末まで あと ${Math.max(0, diffDays)} 日`;
-
-            // モードと目標数
-            const targetCount = getTodayModeTarget();
-            document.getElementById('mode-selector').value = appData.manualMode;
-            document.getElementById('today-mode-banner').innerText = `本日のノルマ目標: ${targetCount} 問完了`;
-
-            // 今日の完了数計算 (〇または△または×で「着手済み」とするが、メダル達成率は〇と△を評価)
-            let todayStr = getTodayStr();
-            let todayDoneCount = 0;
-            Object.keys(appData.subjects).forEach(sKey => {
-                Object.values(appData.subjects[sKey].status).forEach(item => {
-                    if ((item.st === 1 || item.st === 2 || item.st === 3) && item.date === todayStr) {
-                        todayDoneCount++;
-                    }
+            ['1A', '2BC'].forEach(cat => {
+                const units = mathData.filter(u => u.category === cat);
+                let html = `<div class="mb-4"><h3 class="font-extrabold text-indigo-800 text-sm mb-3">■ 数学 ${cat}</h3><div class="space-y-3">`;
+                
+                units.forEach(u => {
+                    const status = userProgress[u.id] || 'none';
+                    html += `
+                        <div class="flex items-center justify-between p-3.5 bg-slate-50 rounded-2xl border border-slate-200">
+                            <div>
+                                <div class="font-extrabold text-slate-800 text-sm">${u.name}</div>
+                                <div class="text-xs text-slate-500 font-bold">全 ${u.count} 題</div>
+                            </div>
+                            <div class="flex gap-1.5">
+                                <button onclick="setStatus('${u.id}', 'ok')" class="px-3 py-1.5 rounded-xl font-bold text-xs transition-all ${status === 'ok' ? 'bg-emerald-600 text-white shadow' : 'bg-white text-slate-600 border border-slate-200'}">〇 完了</button>
+                                <button onclick="setStatus('${u.id}', 'delta')" class="px-3 py-1.5 rounded-xl font-bold text-xs transition-all ${status === 'delta' ? 'bg-amber-500 text-white shadow' : 'bg-white text-slate-600 border border-slate-200'}">△ 復習</button>
+                                <button onclick="setStatus('${u.id}', 'cross')" class="px-3 py-1.5 rounded-xl font-bold text-xs transition-all ${status === 'cross' ? 'bg-rose-600 text-white shadow' : 'bg-white text-slate-600 border border-slate-200'}">× 苦手</button>
+                            </div>
+                        </div>
+                    `;
                 });
+                html += `</div></div>`;
+                container.innerHTML += html;
+            });
+        }
+
+        function setStatus(id, status) {
+            if(userProgress[id] === status) {
+                delete userProgress[id];
+            } else {
+                userProgress[id] = status;
+                if(status === 'ok') {
+                    confetti({ particleCount: 40, spread: 60, origin: { y: 0.8 } });
+                }
+            }
+            localStorage.setItem('study_progress', JSON.stringify(userProgress));
+            renderMathUnits();
+            updateProgressChart();
+        }
+
+        // --- 設定一覧テーブル描画 ---
+        function renderSettingsTable() {
+            const tbody = document.getElementById('settings-table-body');
+            tbody.innerHTML = "";
+            Object.keys(customTargets).forEach(key => {
+                const t = customTargets[key];
+                tbody.innerHTML += `
+                    <tr class="hover:bg-slate-50">
+                        <td class="py-3 px-2 font-bold text-indigo-900">${t.name}</td>
+                        <td class="py-3 px-2 text-slate-600">${t.time}</td>
+                        <td class="py-3 px-2 font-bold text-indigo-600">映有:${t.mathVideo} / 映無:${t.mathNoVideo}問</td>
+                        <td class="py-3 px-2 text-slate-700">映有:${t.phyVideo} / 映無:${t.phyNoVideo}問</td>
+                        <td class="py-3 px-2 text-slate-700">映有:${t.chemVideo} / 映無:${t.chemNoVideo}問</td>
+                        <td class="py-3 px-2 text-xs text-purple-700 font-bold">${t.vocab}</td>
+                    </tr>
+                `;
+            });
+        }
+
+        // --- 目標カスタマイズフォーム描画 ---
+        function renderCustomForm() {
+            const container = document.getElementById('custom-form-container');
+            container.innerHTML = "";
+            Object.keys(customTargets).forEach(key => {
+                const t = customTargets[key];
+                container.innerHTML += `
+                    <div class="bg-indigo-50/40 p-4 rounded-2xl border border-indigo-100 space-y-3">
+                        <div class="font-extrabold text-indigo-900 text-sm">${t.name}</div>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                            <div>
+                                <label class="text-xs font-bold text-slate-600 block mb-1">数学(映像有)</label>
+                                <input type="number" id="${key}-mathVideo" value="${t.mathVideo}" class="w-full bg-white border border-slate-200 rounded-xl p-2 font-bold text-center text-sm">
+                            </div>
+                            <div>
+                                <label class="text-xs font-bold text-slate-600 block mb-1">数学(映像無)</label>
+                                <input type="number" id="${key}-mathNoVideo" value="${t.mathNoVideo}" class="w-full bg-white border border-slate-200 rounded-xl p-2 font-bold text-center text-sm">
+                            </div>
+                            <div>
+                                <label class="text-xs font-bold text-slate-600 block mb-1">物理(映像有)</label>
+                                <input type="number" id="${key}-phyVideo" value="${t.phyVideo}" class="w-full bg-white border border-slate-200 rounded-xl p-2 font-bold text-center text-sm">
+                            </div>
+                            <div>
+                                <label class="text-xs font-bold text-slate-600 block mb-1">物理(映像無)</label>
+                                <input type="number" id="${key}-phyNoVideo" value="${t.phyNoVideo}" class="w-full bg-white border border-slate-200 rounded-xl p-2 font-bold text-center text-sm">
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function saveCustomSettings() {
+            Object.keys(customTargets).forEach(key => {
+                customTargets[key].mathVideo = parseInt(document.getElementById(`${key}-mathVideo`).value) || 0;
+                customTargets[key].mathNoVideo = parseInt(document.getElementById(`${key}-mathNoVideo`).value) || 0;
+                customTargets[key].phyVideo = parseInt(document.getElementById(`${key}-phyVideo`).value) || 0;
+                customTargets[key].phyNoVideo = parseInt(document.getElementById(`${key}-phyNoVideo`).value) || 0;
+            });
+            localStorage.setItem('custom_targets', JSON.stringify(customTargets));
+            renderSettingsTable();
+            renderTasks();
+            alert("目標設定を保存しました！🎉");
+        }
+
+        // --- 全体進捗チャート更新 ---
+        function updateProgressChart() {
+            let okCount = 0, deltaCount = 0, crossCount = 0;
+            let completedProblems = 0;
+            const totalProblems = 795;
+
+            mathData.forEach(u => {
+                const s = userProgress[u.id];
+                if(s === 'ok') {
+                    okCount += u.count;
+                    completedProblems += u.count;
+                } else if(s === 'delta') {
+                    deltaCount += u.count;
+                } else if(s === 'cross') {
+                    crossCount += u.count;
+                }
             });
 
-            // デイリーログ保存
-            let todayYMD = getTodayYMD();
-            appData.dailyLog[todayYMD] = { done: todayDoneCount, target: targetCount };
+            const noneCount = totalProblems - (okCount + deltaCount + crossCount);
 
-            // 達成率計算
-            let pct = targetCount > 0 ? Math.round((todayDoneCount / targetCount) * 100) : 0;
-            let medalIcon = "🔷";
-            let medalTitle = "青メダル";
-            let medalMsg = `目標達成率: ${pct}% （まだまだこれから！）`;
+            document.getElementById('stat-ok').innerText = `${okCount}題`;
+            document.getElementById('stat-delta').innerText = `${deltaCount}題`;
+            document.getElementById('stat-cross').innerText = `${crossCount}題`;
+            document.getElementById('stat-none').innerText = `${noneCount}題`;
 
-            if (pct >= 100) {
-                medalIcon = "🥇";
-                medalTitle = "金メダル！";
-                medalMsg = `目標達成率: ${pct}% （完全コンプリート！）`;
-            } else if (pct >= 70) {
-                medalIcon = "🥈";
-                medalTitle = "銀メダル！";
-                medalMsg = `目標達成率: ${pct}% （素晴らしい集中力！）`;
-            } else if (pct >= 50) {
-                medalIcon = "🥉";
-                medalTitle = "銅メダル！";
-                medalMsg = `目標達成率: ${pct}% （折り返し地点到達！）`;
-            }
+            const ctx = document.getElementById('progressChart').getContext('2d');
+            if(chartInstance) chartInstance.destroy();
 
-            document.getElementById('medal-icon').innerText = medalIcon;
-            document.getElementById('medal-title').innerText = `本日のメダル: ${medalTitle}`;
-            document.getElementById('medal-message').innerText = medalMsg;
-            document.getElementById('medal-progress-text').innerText = `本日こなした問題数: ${todayDoneCount} / ${targetCount} 問`;
-
-            // カレンダー描画
-            let calHtml = "";
-            for (let i = 6; i >= 0; i--) {
-                let d = new Date();
-                d.setDate(d.getDate() - i);
-                let ymd = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-                let log = appData.dailyLog[ymd] || { done: 0, target: 15 };
-                let dayPct = log.target > 0 ? Math.round((log.done / log.target) * 100) : 0;
-
-                let icon = "🔷";
-                let bgClass = "bg-slate-50 border-slate-200 text-slate-400";
-                if (dayPct >= 100) { icon = "🥇"; bgClass = "bg-amber-50 border-amber-300 text-amber-700 font-bold"; }
-                else if (dayPct >= 70) { icon = "🥈"; bgClass = "bg-slate-100 border-slate-300 text-slate-700 font-bold"; }
-                else if (dayPct >= 50) { icon = "🥉"; bgClass = "bg-orange-50 border-orange-200 text-orange-700 font-bold"; }
-
-                calHtml += `
-                    <div class="p-1.5 rounded-2xl border ${bgClass} text-center shadow-2xs">
-                        <div class="text-[10px] opacity-75">${d.getMonth()+1}/${d.getDate()}</div>
-                        <div class="text-base my-0.5">${icon}</div>
-                        <div class="text-[9px] font-bold">${log.done}問</div>
-                    </div>
-                `;
-            }
-            document.getElementById('calendar-container').innerHTML = calHtml;
-
-            // メインコンテンツ
-            const main = document.getElementById('main-content');
-            main.innerHTML = '';
-
-            if (currentTab === 'words') {
-                main.innerHTML = `
-                    <div class="bg-white rounded-3xl p-5 shadow-sm border border-slate-200 space-y-4">
-                        <h3 class="text-base font-black text-indigo-600 flex items-center gap-2"><i class="fa-solid fa-book-open"></i> 英単語・古典単語カウンター</h3>
-                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-2">
-                            <div class="flex justify-between items-center"><span class="font-bold text-sm text-slate-700">英単語 累計マスター</span><span class="text-xl font-black text-indigo-600">${appData.words.englishTotal} 語</span></div>
-                            <div class="flex gap-2 pt-1">
-                                <button onclick="addWords('eng', 10)" class="flex-1 bg-indigo-600 text-white py-2 rounded-xl font-bold text-xs shadow-sm active:scale-95 transition">+10語</button>
-                                <button onclick="addWords('eng', 30)" class="flex-1 bg-purple-600 text-white py-2 rounded-xl font-bold text-xs shadow-sm active:scale-95 transition">+30語</button>
-                            </div>
-                        </div>
-                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-2">
-                            <div class="flex justify-between items-center"><span class="font-bold text-sm text-slate-700">古典単語 累計マスター</span><span class="text-xl font-black text-purple-600">${appData.words.classicalTotal} 語</span></div>
-                            <div class="flex gap-2 pt-1">
-                                <button onclick="addWords('clss', 10)" class="flex-1 bg-indigo-600 text-white py-2 rounded-xl font-bold text-xs shadow-sm active:scale-95 transition">+10語</button>
-                                <button onclick="addWords('clss', 20)" class="flex-1 bg-purple-600 text-white py-2 rounded-xl font-bold text-xs shadow-sm active:scale-95 transition">+20語</button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            } else {
-                const subData = appData.subjects[currentTab];
-                let html = `<div class="space-y-4"><h3 class="text-xs font-bold text-indigo-500 px-1">${subData.name} （タップで 〇 ➔ △ ➔ × ➔ リセット）</h3>`;
-
-                subData.categories.forEach(cat => {
-                    let catCompleted = 0;
-                    cat.problems.forEach(p => {
-                        if ((subData.status[`${cat.id}_${p.num}`] || {st:0}).st === 1) catCompleted++;
-                    });
-                    const catPct = Math.round((catCompleted / cat.problems.length) * 100);
-
-                    html += `
-                        <div class="bg-white rounded-3xl p-4 shadow-sm border border-slate-200 space-y-3">
-                            <div class="flex justify-between items-center">
-                                <h4 class="font-black text-sm text-slate-800">${cat.title}</h4>
-                                <span class="text-xs font-bold text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-full border border-indigo-100">${catCompleted}/${cat.problems.length} (${catPct}%)</span>
-                            </div>
-                            <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-                                <div class="bg-indigo-500 h-full rounded-full transition-all duration-300" style="width: ${catPct}%"></div>
-                            </div>
-                            <div class="grid grid-cols-4 gap-2 pt-1">
-                    `;
-
-                    cat.problems.forEach(p => {
-                        const item = subData.status[`${cat.id}_${p.num}`] || { st: 0, date: "" };
-                        let st = item.st;
-                        
-                        // ステータスごとの色と記号設定
-                        let bg = "bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100";
-                        let mark = "";
-                        
-                        if (st === 1) { // 〇 完ペキ
-                            bg = "bg-emerald-500 text-white border-emerald-400 font-bold shadow-xs";
-                            mark = "<span class='text-xs font-black'>〇</span>";
-                        } else if (st === 2) { // △ 要復習
-                            bg = "bg-amber-400 text-white border-amber-300 font-bold shadow-xs";
-                            mark = "<span class='text-xs font-black'>△</span>";
-                        } else if (st === 3) { // × ダメだった
-                            bg = "bg-rose-500 text-white border-rose-400 font-bold shadow-xs";
-                            mark = "<span class='text-xs font-black'>×</span>";
-                        }
-
-                        html += `
-                            <button onclick="cycleStatus('${currentTab}', '${cat.id}', ${p.num})" class="p-2 rounded-2xl border text-left flex flex-col justify-between transition active:scale-95 ${bg} min-h-[56px]">
-                                <div class="flex justify-between items-center w-full">
-                                    <span class="font-black text-xs">${p.num}</span>
-                                    <span class="text-[10px] opacity-80">${getDiffCircle(p.diff)}</span>
-                                </div>
-                                <div class="flex justify-between items-end w-full mt-1">
-                                    ${mark ? mark : '<span class="text-[9px] opacity-40">-</span>'}
-                                    ${item.date ? `<span class="text-[8px] opacity-90 font-bold">${item.date}</span>` : ''}
-                                </div>
-                            </button>
-                        `;
-                    });
-
-                    html += `</div></div>`;
-                });
-
-                html += `</div>`;
-                main.innerHTML = html;
-            }
+            chartInstance = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['完了 (〇)', '要復習 (△)', '苦手 (×)', '未着手'],
+                    datasets: [{
+                        data: [okCount, deltaCount, crossCount, noneCount],
+                        backgroundColor: ['#10b981', '#f59e0b', '#f43f5e', '#cbd5e1'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { font: { family: 'M PLUS Rounded 1c', weight: 'bold' } } }
+                    }
+                }
+            });
         }
-
-        render();
     </script>
 </body>
 </html>
-
